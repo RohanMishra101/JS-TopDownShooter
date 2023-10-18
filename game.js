@@ -53,11 +53,17 @@ const initialOffsetAngle = Math.PI / 2;
 //Music
 const bgMusic = new Audio();
 const shootMusic = new Audio();
-bgMusic.src = "./Music/bgSpace.mp3";
-bgMusic.volume = 0.3;
+const shipBoom = new Audio();
 
+bgMusic.src = "./Music/bgSpace.mp3";
+bgMusic.volume = 0.2;
+
+
+shipBoom.src = "./Music/destroyShip.wav";
+shipBoom.volume = 0.1;
 const p = new Image();
 p.src = "./img/me.png";
+
 
 
 //Enemy
@@ -76,7 +82,7 @@ const enemy = new Enemy(player);
 const particleController = new ParticleController
 ();
 // let enemy;
-let totalEnemyNo = 10;
+let totalEnemyNo = 1000;
 let i;
 
 for(i = 0; i < totalEnemyNo; i++){
@@ -110,23 +116,24 @@ document.addEventListener("keyup", (e) => {
 
 function gameLoop(){
     updateGame();
-    // bgMusic.play();
-    // bgMusic.loop = true;
-
+    
     requestAnimationFrame(gameLoop);
 }
 
 function updateGame(){
 
     if(player.isAlive){
+        bgMusic.play();
+        bgMusic.loop = true;
+
         player.draw();
         bullet.draw();
         bullet.enemyCollision();
-        // enemy.update();
         spawnEnemy();
         particleController.updateParticles();
-        // particleController.drawParticles();
 
+    }else{
+        bgMusic.pause();
     }
     
 }

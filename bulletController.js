@@ -1,10 +1,14 @@
+
 //Bullet Controller
 class bulletController{
     bullets = [];
     timeTillNextBullets = 0;
+    
+    
     constructor(){
         this.r = 4;
         this.checkCollision;
+
     }
     draw(){
         this.bullets.forEach((bullet) =>bullet.draw());
@@ -30,6 +34,9 @@ class bulletController{
                         if (distance < this.r + enemy.size.radius) {
                             console.log("Enemy Dead");
                             
+                            shipBoom.play();
+
+
                             const particle = new Particle(enemy);
                             particleController.createParticle(enemy);
 

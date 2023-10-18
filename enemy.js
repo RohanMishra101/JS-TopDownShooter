@@ -11,10 +11,7 @@ class Enemy{
             x : Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
             y : Math.floor(Math.random() * (yMax - yMin + 1) + yMin),
         }
-        this.velocity = {
-            x: 2,
-            y: 2,
-        }
+        
         this.color = "Red";
         this.size = {
             radius: 35,
@@ -44,7 +41,7 @@ class Enemy{
 
         this.distance = Math.sqrt(dx*dx + dy*dy);
 
-        let speed = 0.8;
+        let speed = 2;
         this.position.x -= (dx / this.distance) * speed;
         this.position.y -= (dy / this.distance) * speed;
     }
