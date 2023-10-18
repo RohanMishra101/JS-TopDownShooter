@@ -1,27 +1,32 @@
 //Player
 class Player{
     constructor(bulletControler){
-        this.posX = centerPointX;
-        this.posY = centerPointY;
+        this.position = {
+            posX : centerPointX, 
+            posY : centerPointY,
+        }
+        
         this.bulletControler = bulletControler;
-        this.health = 100;
-        this.speed = 3;
+        this.health = 3;
+        this.speed = 4;
         this.angle;
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
         this.color = "Blue";
+        this.radius = 35;
+        this.isAlive = true;
     }
     draw(){
         // Set shadow properties for the glow effect
         playerContext.shadowColor = "White"; // Color of the glow
-        playerContext.shadowBlur = 7; // Blur radius of the glow
+        playerContext.shadowBlur = 1000; // Blur radius of the glow
         playerContext.shadowOffsetX = 0; // Horizontal offset of the glow
         playerContext.shadowOffsetY = 0; // Vertical offset of the glow
 
         playerContext.clearRect(0,0,canvas.width,canvas.height);
 
         playerContext.save();
-        playerContext.translate(this.posX,this.posY);
+        playerContext.translate(this.position.posX,this.position.posY);
         playerContext.rotate(this.angle + initialOffsetAngle);
         playerContext.beginPath();
         playerContext.fillStyle = "White";
@@ -32,7 +37,7 @@ class Player{
         playerContext.strokeStyle = "white";
         playerContext.lineWidth = 4;
         playerContext.fillStyle = this.color;
-        playerContext.arc(0,0,35,0,360);
+        playerContext.arc(0,0,this.radius,0,360);
         playerContext.fill();
         playerContext.stroke();
 
@@ -46,16 +51,16 @@ class Player{
     }
 
     rotate(){
-        const deltaX = mousePosX - this.posX;
-        const deltaY = mousePosY - this.posY;
+        const deltaX = mousePosX - this.position.posX;
+        const deltaY = mousePosY - this.position.posY;
         this.angle = Math.atan2(deltaY, deltaX);
     }
 
     move(){
         
         // Calculate the new positions
-        let newPosX = this.posX;
-        let newPosY = this.posY;
+        let newPosX = this.position.posX;
+        let newPosY = this.position.posY;
 
         if (keys["KeyW"]) {
            newPosY -= this.speed;
@@ -73,11 +78,11 @@ class Player{
         // Check if the new positions are within the canvas boundaries
         if (newPosX > 0 && newPosX < this.canvasWidth) {
             // playerPosX = this.posX;
-            this.posX = newPosX;
+            this.position   .posX = newPosX;
         }
         if (newPosY > 0 && newPosY < this.canvasHeight) {
             // playerPosY = this.posY;
-            this.posY = newPosY;
+            this.position.posY = newPosY;
         }
         
     }
@@ -89,15 +94,15 @@ class Player{
             shootMusic.volume = 0.2;
             isMouseClicked = false;
             console.log("shoot");
-            const speed = 8;
+            const speed = 20;
             const delay = 1;
             const damage = 1;
             // Calculate the adjusted angle for shooting
-            const adjustedAngle = this.angle - initialOffsetAngle;
+            const adjustedAngle = this.angle - initialOffsetAngle - 0.17;
 
             // Calculate the rotated coordinates of the bottom-center of the player
-            const playerBottomX = this.posX - 7.5 * Math.cos(adjustedAngle); 
-            const playerBottomY = this.posY - 7.5 * Math.sin(adjustedAngle); 
+            const playerBottomX = this.position.posX - 7.5 * Math.cos(adjustedAngle); 
+            const playerBottomY = this.position.posY - 7.5 * Math.sin(adjustedAngle); 
 
             // Calculate the offset based on player's rotation and set bullet positions
             const offsetX = 45 * Math.sin(adjustedAngle); 

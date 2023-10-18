@@ -25,30 +25,14 @@ playerCanvas.style.zIndex = "100";
 document.body.appendChild(playerCanvas);
 
 
-// //Creating a new layer for player
-// let bulletCanvas = document.createElement("canvas");
-// let bulletCtx = bulletCanvas.getContext("2d");
-
-// bulletCanvas.width = canvas.width;
-// bulletCanvas.height = canvas.height;
-
-// bulletCanvas.style.position = "absolute";
-// bulletCanvas.style.top = "0";
-// bulletCanvas.style.left = "0";
-// bulletCanvas.style.pointerEvents = "none";
-// bulletCanvas.style.zIndex = "101";
-
-
-// document.body.appendChild(bulletCanvas);
-
 
 window.addEventListener('resize', resizeCanvas);
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    playerCanvas.width =  canvas.width;
-    playerCanvas.height =  canvas.height;
+    playerCanvas.width = window.innerWidth;
+    playerCanvas.height = window.innerHeight;
 }
 
 //Screen Center Point
@@ -76,40 +60,8 @@ const p = new Image();
 p.src = "./img/me.png";
 
 
-class Enemy{
-    constructor(){
-        this.x;
-        this.y;
-        this.color = "Red";
-
-    }
-
-    draw(){
-        playerContext.beginPath();
-        playerContext.strokeStyle = "white";
-        playerContext.lineWidth = 4;
-        playerContext.fillStyle = this.color;
-        playerContext.arc(this.x,this.y,35,0,360);
-        playerContext.fill();
-        playerContext.stroke();
-    }
-
-    generatePosition(arg){
-        let xMax = canvas.width + 50;
-        let xMin = -50;
-        let yMax = canvas.height + 50;
-        let yMin = -50;
-        let randomNum;
-        let temp;
-        if(arg == "x"){
-            // if(){
-                
-            // }
-        }else{
-
-        }
-    }
-}
+//Enemy
+let enemyArr = [];
 
 
 document.body.addEventListener('click',(e)=>{
@@ -118,11 +70,23 @@ document.body.addEventListener('click',(e)=>{
     }
 });
 
-const bullet = new bulletControler();
+const bullet = new bulletController();
 const player = new Player(bullet);
-const enemy = new Enemy();
-// const bullet = new Bullet();
+const enemy = new Enemy(player);
+const particleController = new ParticleController
+();
+// let enemy;
+let totalEnemyNo = 10;
+let i;
 
+for(i = 0; i < totalEnemyNo; i++){
+    setTimeout(() =>{
+        const enemy = new Enemy(player);
+        enemyArr.push(enemy);
+        console.log(enemyArr);
+    },i*2000);
+    // enemy[i].update();
+}
 
 document.body.addEventListener("mousemove",(e)=>{
     mousePosX = parseInt(e.clientX);
@@ -146,17 +110,31 @@ document.addEventListener("keyup", (e) => {
 
 function gameLoop(){
     updateGame();
-    bgMusic.play();
-    bgMusic.loop = true;
+    // bgMusic.play();
+    // bgMusic.loop = true;
 
     requestAnimationFrame(gameLoop);
 }
 
 function updateGame(){
 
-    player.draw();
-    bullet.draw();
-    // enemy.draw();
+    if(player.isAlive){
+        player.draw();
+        bullet.draw();
+        bullet.enemyCollision();
+        // enemy.update();
+        spawnEnemy();
+        particleController.updateParticles();
+        // particleController.drawParticles();
+
+    }
+    
+}
+
+function spawnEnemy(){
+    for (let i = 0; i < enemyArr.length; i++) {
+        enemyArr[i].update();
+    }
 }
 
 gameLoop();
