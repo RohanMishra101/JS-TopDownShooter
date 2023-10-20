@@ -7,19 +7,22 @@ let yMax = window.innerHeight;
 // console.log(xMax , " " , yMax);
 class Enemy{
     constructor(player){
-        this.position = {
-            x : Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
-            y : Math.floor(Math.random() * (yMax - yMin + 1) + yMin),
-        }
-        
-        this.color = "Red";
         this.size = {
             radius: 35,
         }
+        this.position = {
+            x: this.generateRandomLocation("x"),
+            y: this.generateRandomLocation("y"),
+        }
+        
+        this.color = "Red";
+        
         this.player = player;
         this.checkCollision;
         this.visible = true;
         this.distance;
+        this.enemyArr = [];
+
     }
 
     draw(){
@@ -44,15 +47,50 @@ class Enemy{
         let speed = 2;
         this.position.x -= (dx / this.distance) * speed;
         this.position.y -= (dy / this.distance) * speed;
+    }    
+
+    generateRandomLocation(arg){
+        let randomLocation;
+        const side = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
+        
+        switch (side) {
+            case 0: // top
+                randomLocation = {
+                    x: Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
+                    y: yMin - this.size.radius - 10 // Place enemy just above the top edge
+                };
+                break;
+            case 1: // right
+                randomLocation = {
+                    x: xMax + this.size.radius + 10, // Place enemy just to the right of the right edge
+                    y: Math.floor(Math.random() * (yMax - yMin + 1) + yMin)
+                };
+                break;
+            case 2: // bottom
+                randomLocation = {
+                    x: Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
+                    y: yMax + this.size.radius + 10 // Place enemy just below the bottom edge
+                };
+                break;
+            case 3: // left
+                randomLocation = {
+                    x: xMin - this.size.radius - 10, // Place enemy just to the left of the left edge
+                    y: Math.floor(Math.random() * (yMax - yMin + 1) + yMin)
+                };
+                break;
+            default:
+                break;
+        }
+
+        if (arg === "x") {
+            return randomLocation.x;
+        } else {
+            return randomLocation.y;
+        }
     }
-    animate(){
-        this.position.x += Math.random() * (1 + 1 + 1) - 1;
-        this.position.y += Math.random() * (1 + 1 + 1) - 1;
-    }
 
 
 
-    
     enemyToPlayerCollision(){
         this.checkCollision = Math.sqrt(Math.pow(this.position.x-this.player.position.posX,2) + Math.pow(this.position.y-this.player.position.posY,2))
 
@@ -75,6 +113,8 @@ class Enemy{
 
 
     update(){
+        // this.createEnemy();
+        // this.generateRandomLocation();
         this.draw();
         this.move();
         

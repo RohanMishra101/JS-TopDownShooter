@@ -39,16 +39,18 @@ class scoreBoard{
         playerContext.fillStyle = this.color;
         playerContext.fillText(this.minTime + " : " + this.secTime,this.t_position.x,this.t_position.y);
     }
+
+    // Timer
     incTimer(){
         if(this.timer == null){
             this.timer = setInterval(() => {
                 this.incrementSec();
-                
-    
+
                 this.incTimer();
             },1000);
         }
     }  
+    //Second, Min, hr
     incrementSec(){
         if(this.secTime == 60){
             this.secTime = 0;
@@ -60,9 +62,11 @@ class scoreBoard{
                 console.log("Congo!!! Now Go Touch Some Grass");
             }
         }else{
-            this.secTime += 1;  
+            this.secTime += 1; 
         }
     } 
+
+
 
     stopTimer() {
         clearTimeout(this.timer);

@@ -12,7 +12,6 @@ class bulletController{
     }
     draw(){
         this.bullets.forEach((bullet) =>bullet.draw());
-
     }
     shoot(x,y,speed,damage,delay,angle){
         if(this.timeTillNextBullets <= 0){
@@ -45,15 +44,23 @@ class bulletController{
                             shipBoom.play();
 
                             // Remove the bullet and the enemy
-                            this.bullets.splice(i, 1);
-                            enemyArr.splice(j, 1);
+                            setTimeout(() => {
+                                this.bullets.splice(i, 1);
+                                enemyArr.splice(j, 1);
+                            }, 0);
 
+                        }
+
+                        if(bullet.x + this.r < 0 || bullet.x - this.r > window.innerWidth || bullet.y + this.r < 0 || this.y - this.r < window.innerHeight){
+                            // console.log(this.bullets);
+                            this.bullets.splice(i,1);
                         }
                     }
                 }
             }
         }
     }
+    
 
     shakeCamera() {
         const shake = 50;

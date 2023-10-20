@@ -22,7 +22,7 @@ playerCanvas.style.left = "0";
 playerCanvas.style.pointerEvents = "none";
 playerCanvas.style.zIndex = "100";
 playerCanvas.style.backgroundColor = "#2B2730";
-
+canvas.style.backgroundColor = "#2B2730";
 document.body.appendChild(playerCanvas);
 
 
@@ -47,7 +47,7 @@ let mousePosX;
 let mousePosY;
 let angle;
 let isMouseClicked = false;
-
+let isPaused = false;
 // 90 degrees in clockwise direction
 const initialOffsetAngle = Math.PI / 2; 
 
@@ -82,20 +82,51 @@ const player = new Player(bullet);
 const enemy = new Enemy(player);
 const particleController = new ParticleController();
 
-// let enemy;
-let totalEnemyNo = 10000;
+//Creating Enemy
 let i;
+let enemyInterval = 1000;
 
-for(i = 0; i < totalEnemyNo; i++){
-    setTimeout(() =>{
+
+function createEnemy(){
+    if(isPaused){
+        return;
+    }
+    setInterval(() =>{
+        // console.log(enemyInterval);
         const enemy = new Enemy(player);
         enemyArr.push(enemy);
-        // console.log(enemyArr);
-    },i*2000);
+        // console.log("HEllo");
+        if(enemyInterval > 700){
+            enemyInterval = enemyInterval - 4;
+        }else{
+            enemyInterval = 700;
+        }
+
+        if(score.minTime == 4){
+            enemyInterval -= 100;
+        }
+    },enemyInterval);
+
+    
+
+    
 }
 
 
+
+
+
+
 // =-=-=-=-=-=-= Event Listiners =-=-=-=-=-=-=-=
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        isPaused = true;
+        console.log("Tab or window is not visible");
+    } else {
+        isPaused = false;
+        console.log("Tab or window is visible");
+    }
+});
 document.body.addEventListener('click',(e)=>{
     if(e.button == 0){
         isMouseClicked = true;
@@ -132,7 +163,6 @@ function updateGame(){
     // ui.draw();
 
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
-
     // bgParticles.update();
     if(player.isAlive){
         bgMusic.play();
@@ -159,15 +189,7 @@ function updateGame(){
         playerContext.fillStyle = this.color;
         playerContext.fillText("Game Over",window.innerWidth/3.5,window.innerHeight/2);
     }
-
-    // Draw game elements
-
-    // Draw UI elements (if any)
-
-    // Update and draw background particles
 }
-
-
 
 
 
@@ -179,3 +201,4 @@ function spawnEnemy(){
 }
 
 gameLoop();
+createEnemy();
