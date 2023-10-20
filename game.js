@@ -15,12 +15,13 @@ let playerContext = playerCanvas.getContext("2d");
 playerCanvas.width = canvas.width;
 playerCanvas.height = canvas.height;
 
+// playerCanvas.style.background = "Red";
 playerCanvas.style.position = "absolute";
 playerCanvas.style.top = "0";
 playerCanvas.style.left = "0";
 playerCanvas.style.pointerEvents = "none";
 playerCanvas.style.zIndex = "100";
-
+playerCanvas.style.backgroundColor = "#2B2730";
 
 document.body.appendChild(playerCanvas);
 
@@ -52,7 +53,7 @@ const initialOffsetAngle = Math.PI / 2;
 
 //Music
 const bgMusic = new Audio();
-const shootMusic = new Audio();
+const shootSound = new Audio();
 const shipBoom = new Audio();
 
 bgMusic.src = "./Music/bgSpace.mp3";
@@ -61,6 +62,10 @@ bgMusic.volume = 0.2;
 
 shipBoom.src = "./Music/destroyShip.wav";
 shipBoom.volume = 0.1;
+
+shootSound.src = "./Music/shoot.wav";
+shootSound.volume = 0.2;
+
 const p = new Image();
 p.src = "./img/me.png";
 
@@ -70,29 +75,33 @@ p.src = "./img/me.png";
 let enemyArr = [];
 
 
-document.body.addEventListener('click',(e)=>{
-    if(e.button == 0){
-        isMouseClicked = true;
-    }
-});
 
-const bullet = new bulletController();
+const score = new scoreBoard();
+const bullet = new bulletController(score);
 const player = new Player(bullet);
 const enemy = new Enemy(player);
-const particleController = new ParticleController
-();
+const particleController = new ParticleController();
+
 // let enemy;
-let totalEnemyNo = 1000;
+let totalEnemyNo = 10000;
 let i;
 
 for(i = 0; i < totalEnemyNo; i++){
     setTimeout(() =>{
         const enemy = new Enemy(player);
         enemyArr.push(enemy);
-        console.log(enemyArr);
+        // console.log(enemyArr);
     },i*2000);
-    // enemy[i].update();
 }
+
+
+// =-=-=-=-=-=-= Event Listiners =-=-=-=-=-=-=-=
+document.body.addEventListener('click',(e)=>{
+    if(e.button == 0){
+        isMouseClicked = true;
+        shootSound.play();
+    }
+});
 
 document.body.addEventListener("mousemove",(e)=>{
     mousePosX = parseInt(e.clientX);
@@ -102,10 +111,8 @@ document.body.addEventListener("mousemove",(e)=>{
 });
 
 
-// Initialize an object to store the state of the keys
 const keys = {};
 
-// Event listeners for keydown and keyup events to track the state of the keys
 document.addEventListener("keydown", (e) => {
     keys[e.code] = true;
 });
@@ -115,28 +122,55 @@ document.addEventListener("keyup", (e) => {
 });
 
 function gameLoop(){
+    // playerContext.clearRect(0, 0, canvas.width, canvas.height);
     updateGame();
     
     requestAnimationFrame(gameLoop);
 }
 
 function updateGame(){
+    // ui.draw();
 
+    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
+
+    // bgParticles.update();
     if(player.isAlive){
         bgMusic.play();
         bgMusic.loop = true;
 
+        score.update();
+
         player.draw();
+  
         bullet.draw();
         bullet.enemyCollision();
+
         spawnEnemy();
         particleController.updateParticles();
 
+        
+
     }else{
+        score.update();
         bgMusic.pause();
+        score.stopTimer();
+        playerContext.beginPath();
+        playerContext.font = "bold 190px Arial";
+        playerContext.fillStyle = this.color;
+        playerContext.fillText("Game Over",window.innerWidth/3.5,window.innerHeight/2);
     }
-    
+
+    // Draw game elements
+
+    // Draw UI elements (if any)
+
+    // Update and draw background particles
 }
+
+
+
+
+
 
 function spawnEnemy(){
     for (let i = 0; i < enemyArr.length; i++) {

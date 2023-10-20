@@ -4,5 +4,6 @@
     box-sizing: border-box;
 }
 body{
+    background-color: #2B2730;
     overflow: hidden;
 }

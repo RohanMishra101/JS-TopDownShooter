@@ -45,6 +45,10 @@ class Enemy{
         this.position.x -= (dx / this.distance) * speed;
         this.position.y -= (dy / this.distance) * speed;
     }
+    animate(){
+        this.position.x += Math.random() * (1 + 1 + 1) - 1;
+        this.position.y += Math.random() * (1 + 1 + 1) - 1;
+    }
 
 
 

@@ -1,7 +1,7 @@
 class ParticleController {
     constructor() {
         this.particles = [];
-        this.totalParticles = 20;
+        this.totalParticles = 30;
     }
 
     createParticle(enemy) {
@@ -20,7 +20,6 @@ class ParticleController {
     updateParticles() {
         this.particles = this.particles.filter(particle => {
             particle.decreaseLife();
-
             if(particle.life > 0){
                 return true;
             }else{

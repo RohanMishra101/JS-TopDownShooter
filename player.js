@@ -23,7 +23,7 @@ class Player{
         playerContext.shadowOffsetX = 0; // Horizontal offset of the glow
         playerContext.shadowOffsetY = 0; // Vertical offset of the glow
 
-        playerContext.clearRect(0,0,canvas.width,canvas.height);
+        // playerContext.clearRect(0,0,canvas.width,canvas.height);
 
         playerContext.save();
         playerContext.translate(this.position.posX,this.position.posY);
@@ -89,9 +89,8 @@ class Player{
 
     shoot(){
         if(isMouseClicked){
-            shootMusic.src = "/./Music/shoot.wav";
-            shootMusic.play();
-            shootMusic.volume = 0.2;
+            // shootMusic.src = "/./Music/shoot.wav";
+            
             isMouseClicked = false;
             console.log("shoot");
             const speed = 20;

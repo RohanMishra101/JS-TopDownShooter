@@ -1,4 +1,4 @@
-let maxRadius = 35/3;
+let maxRadius = 35/3.5;
 let minRadius = 7;
 
 
@@ -28,20 +28,6 @@ class Particle{
         playerContext.fill();
     }
     move(){ 
-        // const dx = this.position.x - this.player.position.posX;
-        // const dy = this.position.y - this.player.position.posY;
-        
-        // // console.log("The angle between player and enemy =  X : " ,dx," Y : ", dy);
-
-        // let distance = Math.sqrt(dx*dx + dy*dy);
-        
-        // let speed = 0.8;
-        // this.position.x -= (dx / distance) * speed;
-        // this.position.y -= (dy / distance) * speed;
-
-
-
-
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
     }
