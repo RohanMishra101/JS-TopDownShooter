@@ -12,7 +12,7 @@ class Player{
         this.angle;
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
-        this.color = "Blue";
+        this.color = "#38a3a5";
         this.radius = 35;
         this.isAlive = true;
     }

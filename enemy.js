@@ -15,7 +15,7 @@ class Enemy{
             y: this.generateRandomLocation("y"),
         }
         
-        this.color = "Red";
+        this.color = "#ef233c";
         
         this.player = player;
         this.checkCollision;

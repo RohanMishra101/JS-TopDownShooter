@@ -18,7 +18,7 @@ class Particle{
             y : Math.random() * 2 - 1,
         }
         // this.color = this.generateRandomColor();
-        this.color = "Red";
+        this.color = "#ef233c";
         this.life = 80;
     }
     draw(){

@@ -1,29 +1,20 @@
 
 // alert("The game is still under CONSTRUCTION. You can sillt try it, if you found it laggy then My Brother/Sister its time to upgrade you PC cause it works on mine!!");
 
-let canvas = document.getElementById("canvas");
+let playBtn = document.getElementById("playBtn");
+let mainMenu = document.getElementById("menu") 
+let playerCanvas = document.getElementById("canvas");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+playerCanvas.width = window.innerWidth;
+playerCanvas.height = window.innerHeight;
 
-let context = canvas.getContext("2d");
+let playerContext = canvas.getContext("2d");
 
-//Creating a new layer for player
-let playerCanvas = document.createElement("canvas");
-let playerContext = playerCanvas.getContext("2d");
 
-playerCanvas.width = canvas.width;
-playerCanvas.height = canvas.height;
-
-// playerCanvas.style.background = "Red";
-playerCanvas.style.position = "absolute";
-playerCanvas.style.top = "0";
-playerCanvas.style.left = "0";
 playerCanvas.style.pointerEvents = "none";
-playerCanvas.style.zIndex = "100";
+
 playerCanvas.style.backgroundColor = "#2B2730";
-canvas.style.backgroundColor = "#2B2730";
-document.body.appendChild(playerCanvas);
+
 
 
 
@@ -118,6 +109,8 @@ function createEnemy(){
 
 
 // =-=-=-=-=-=-= Event Listiners =-=-=-=-=-=-=-=
+
+playBtn.addEventListener("click", startGame);
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
         isPaused = true;
@@ -153,7 +146,7 @@ document.addEventListener("keyup", (e) => {
 });
 
 function gameLoop(){
-    // playerContext.clearRect(0, 0, canvas.width, canvas.height);
+    console.log("GameLoop");
     updateGame();
     
     requestAnimationFrame(gameLoop);
@@ -162,6 +155,7 @@ function gameLoop(){
 function updateGame(){
     // ui.draw();
 
+    // console.log("Updating");
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
     // bgParticles.update();
     if(player.isAlive){
@@ -200,5 +194,13 @@ function spawnEnemy(){
     }
 }
 
-gameLoop();
-createEnemy();
+
+function startGame(){
+
+    mainMenu.style.display = "none";
+    playerCanvas.style.display = "block";
+    gameLoop();
+
+    createEnemy();
+
+}
