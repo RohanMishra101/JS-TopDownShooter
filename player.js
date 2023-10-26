@@ -8,13 +8,14 @@ class Player{
         
         this.bulletControler = bulletControler;
         this.health = 3;
-        this.speed = 4;
+        this.speed = 6;
         this.angle;
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
         this.color = "#38a3a5";
         this.radius = 35;
         this.isAlive = true;
+        this.enemySpeed;
     }
     draw(){
         // Set shadow properties for the glow effect
@@ -92,7 +93,7 @@ class Player{
             // shootMusic.src = "/./Music/shoot.wav";
             
             isMouseClicked = false;
-            console.log("shoot");
+            // console.log("shoot");
             const speed = 20;
             const delay = 1;
             const damage = 1;

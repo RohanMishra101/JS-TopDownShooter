@@ -19,7 +19,7 @@ class Particle{
         }
         // this.color = this.generateRandomColor();
         this.color = "#ef233c";
-        this.life = 80;
+        this.life = 100;
     }
     draw(){
         playerContext.beginPath();

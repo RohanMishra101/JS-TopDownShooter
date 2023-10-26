@@ -51,8 +51,7 @@ bgMusic.src = "./Music/bgSpace.mp3";
 bgMusic.volume = 0.2;
 
 
-shipBoom.src = "./Music/destroyShip.wav";
-shipBoom.volume = 0.1;
+
 
 shootSound.src = "./Music/shoot.wav";
 shootSound.volume = 0.2;
@@ -121,6 +120,7 @@ document.addEventListener("visibilitychange", () => {
         console.log("Tab or window is visible");
     }
 });
+
 document.body.addEventListener('click',(e)=>{
     if(e.button == 0){
         isMouseClicked = true;
@@ -145,7 +145,9 @@ document.addEventListener("keyup", (e) => {
 });
 
 function gameLoop(){
-    console.log("GameLoop");
+    // console.log("GameLoop");
+    measureRefreshRate();
+
     updateGame();
 
     requestAnimationFrame(gameLoop);
@@ -154,6 +156,7 @@ function gameLoop(){
 function updateGame(){
     // console.log("Updating");
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
+
 
     if(player.isAlive){
         bgMusic.play();
@@ -197,3 +200,36 @@ function spawnEnemy(){
 //     gameLoop();
 //     createEnemy();
 // }
+
+
+function measureRefreshRate() {
+    var frameCount = 0;
+    var startTime = performance.now();
+
+    function draw() {
+        frameCount++;
+            // console.log(performance.now() - startTime);
+        if (performance.now() - startTime >= 1000) {
+            var refreshRate = frameCount;
+            // console.log("Estimated Screen Refresh Rate: " + refreshRate + " FPS");
+
+            if(refreshRate < 100){
+                player.speed = 10;
+                player.enemySpeed = 6;
+            }else{
+                player.speed = 4;
+                player.enemySpeed = 2;
+            }
+            console.log("Player : ",player.speed);
+            console.log("Enemy : ",player.enemySpeed);
+
+           
+        } else {
+            requestAnimationFrame(draw);
+        }
+    }
+
+    draw();
+}
+
+

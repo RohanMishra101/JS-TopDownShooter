@@ -22,6 +22,7 @@ class Enemy{
         this.visible = true;
         this.distance;
         this.enemyArr = [];
+        this.speed = player.enemySpeed;
 
     }
 
@@ -44,9 +45,9 @@ class Enemy{
 
         this.distance = Math.sqrt(dx*dx + dy*dy);
 
-        let speed = 2;
-        this.position.x -= (dx / this.distance) * speed;
-        this.position.y -= (dy / this.distance) * speed;
+        // let speed = 2;
+        this.position.x -= (dx / this.distance) * this.speed;
+        this.position.y -= (dy / this.distance) * this.speed;
     }    
 
     generateRandomLocation(arg){
@@ -81,7 +82,6 @@ class Enemy{
             default:
                 break;
         }
-
         if (arg === "x") {
             return randomLocation.x;
         } else {
@@ -118,7 +118,7 @@ class Enemy{
         this.draw();
         this.move();
         
-        // this.enemyToenemyColision();
+        // this.enemyToenemyCollision();
         this.enemyToPlayerCollision();
     }
 

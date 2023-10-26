@@ -9,11 +9,15 @@ class bulletController{
         this.r = 4;
         this.checkCollision;
         this.score = score;
+        this.shipBoom = new Audio();
+        this.shipBoom.src = "./Music/destroyShip.wav";
+        this.shipBoom.volume = 0.1;
     }
     draw(){
         this.bullets.forEach((bullet) =>bullet.draw());
     }
     shoot(x,y,speed,damage,delay,angle){
+        speed +=30;
         if(this.timeTillNextBullets <= 0){
 
             this.bullets.push(new Bullet(x,y,speed,damage,angle,this.r));
@@ -33,13 +37,14 @@ class bulletController{
                         const distance = Math.sqrt(dx * dx + dy * dy);
     
                         if (distance < this.r + enemy.size.radius) {
-                            console.log("Enemy Dead");
+                            // console.log("Enemy Dead");
 
                             this.shakeCamera();
                             
                             
                             this.score.incScore += 1;
-                            shipBoom.play();
+
+                            this.shipBoom.play();
 
                             const particle = new Particle(enemy);
                             particleController.createParticle(enemy);
