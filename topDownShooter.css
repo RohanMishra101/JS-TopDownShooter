@@ -8,6 +8,7 @@
 
 body {
     background-color: #2B2730;
+    overflow: hidden;
 }
 #canvas{
     display: none;
@@ -19,6 +20,7 @@ body {
     align-items: center;
     height: 80vh;
     width: 100%;
+    /* display: none; */
     /* z-index: 1000; */
 }
 
@@ -55,18 +57,39 @@ body {
     border-radius: 20px;
     margin: 10px 0; 
     text-align: center;
-    max-width: 400px; /* Set maximum width */
+    max-width: 400px;
     box-sizing: border-box;
 }
 
 #playBtn {
     background-color: #38a3a5;
-    transition: all 100ms ease-in;
 }
 
 #exitBtn {
     background-color: #ef233c;
 }
+
+#restart{
+    background-color: #38a3a5;
+}
+
+#mainMenu{
+    background-color: #ef233c;
+}
+.gameOver{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    /* display: none; */
+    /* outline: red 3px solid; */
+}
+
+
+
+
 
 /* Media Queries */
 @media screen and (max-width: 1920px) {

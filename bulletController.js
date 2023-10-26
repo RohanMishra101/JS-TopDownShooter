@@ -34,14 +34,16 @@ class bulletController{
     
                         if (distance < this.r + enemy.size.radius) {
                             console.log("Enemy Dead");
+
                             this.shakeCamera();
                             
                             
                             this.score.incScore += 1;
+                            shipBoom.play();
 
                             const particle = new Particle(enemy);
                             particleController.createParticle(enemy);
-                            shipBoom.play();
+                            
 
                             // Remove the bullet and the enemy
                             setTimeout(() => {
@@ -73,18 +75,17 @@ class bulletController{
                 const offsetX = Math.random() * shake - shake / 2;
                 const offsetY = Math.random() * shake - shake / 2;
     
-                playerCanvas.style.left = offsetX + "px";
-                playerCanvas.style.top = offsetY + "px";
+                playerCanvas.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     
                 requestAnimationFrame(updateCamera);
             } else {
-                playerCanvas.style.left = "0";
-                playerCanvas.style.top = "0";
+                playerCanvas.style.transform = 'translate(0, 0)';
             }
         }
     
         updateCamera();
     }
+    
     
     
 }

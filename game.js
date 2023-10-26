@@ -1,22 +1,22 @@
 
-// alert("The game is still under CONSTRUCTION. You can sillt try it, if you found it laggy then My Brother/Sister its time to upgrade you PC cause it works on mine!!");
+// alert("The game is still under CONSTRUCTION. You can still try it, if you found it laggy then My Brother/Sister its time to upgrade you PC cause it works on mine!!");
 
-let playBtn = document.getElementById("playBtn");
-let mainMenu = document.getElementById("menu") 
+//Declaration and Definition
 let playerCanvas = document.getElementById("canvas");
-
 playerCanvas.width = window.innerWidth;
 playerCanvas.height = window.innerHeight;
+playerCanvas.style.pointerEvents = "none";
+playerCanvas.style.backgroundColor = "#2B2730";
+
 
 let playerContext = canvas.getContext("2d");
 
 
-playerCanvas.style.pointerEvents = "none";
-
-playerCanvas.style.backgroundColor = "#2B2730";
-
-
-
+let mainMenu = document.getElementById("menu");
+let playBtn = document.getElementById("playBtn");
+// let restartBtn = document.getElementById("restart");
+// let gameOverDisplay = document.getElementById("restartBtns");
+let exitBtn = document.getElementById("exitBtn");
 
 window.addEventListener('resize', resizeCanvas);
 
@@ -31,7 +31,6 @@ function resizeCanvas() {
 let centerPointX = canvas.width/2;
 let centerPointY = canvas.height/2;
 
-// console.log("X : ", centerPointX," Y : ",centerPointY);
 
 //Mouse Position on the body
 let mousePosX;
@@ -39,6 +38,7 @@ let mousePosY;
 let angle;
 let isMouseClicked = false;
 let isPaused = false;
+
 // 90 degrees in clockwise direction
 const initialOffsetAngle = Math.PI / 2; 
 
@@ -61,11 +61,8 @@ const p = new Image();
 p.src = "./img/me.png";
 
 
-
 //Enemy
 let enemyArr = [];
-
-
 
 const score = new scoreBoard();
 const bullet = new bulletController(score);
@@ -83,10 +80,9 @@ function createEnemy(){
         return;
     }
     setInterval(() =>{
-        // console.log(enemyInterval);
         const enemy = new Enemy(player);
         enemyArr.push(enemy);
-        // console.log("HEllo");
+
         if(enemyInterval > 700){
             enemyInterval = enemyInterval - 4;
         }else{
@@ -97,20 +93,25 @@ function createEnemy(){
             enemyInterval -= 100;
         }
     },enemyInterval);
-
-    
-
-    
 }
 
 
+// =-=-=-=-=-=-= Event Listeners =-=-=-=-=-=-=-=
 
-
-
-
-// =-=-=-=-=-=-= Event Listiners =-=-=-=-=-=-=-=
-
-playBtn.addEventListener("click", startGame);
+playBtn.addEventListener("click", () =>{
+    isAlive = true;
+    mainMenu.style.display = "none";
+    // gameOverDisplay.style.display = "none";
+    playerCanvas.style.display = "block";
+    isGameRunning = true;
+    gameLoop();
+    createEnemy();
+});
+// restartBtn.addEventListener("click", () => {
+//     console.log("Restart");
+//     gameOverDisplay.style.display = "none"; // Hide the game over display when restarting
+//     restartGame(); // Call the restartGame function here
+// });
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
         isPaused = true;
@@ -130,8 +131,6 @@ document.body.addEventListener('click',(e)=>{
 document.body.addEventListener("mousemove",(e)=>{
     mousePosX = parseInt(e.clientX);
     mousePosY = parseInt(e.clientY);
-
-    // console.log("X : ", mousePosX," Y : ",mousePosY);
 });
 
 
@@ -148,16 +147,14 @@ document.addEventListener("keyup", (e) => {
 function gameLoop(){
     console.log("GameLoop");
     updateGame();
-    
+
     requestAnimationFrame(gameLoop);
 }
 
 function updateGame(){
-    // ui.draw();
-
     // console.log("Updating");
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
-    // bgParticles.update();
+
     if(player.isAlive){
         bgMusic.play();
         bgMusic.loop = true;
@@ -171,22 +168,20 @@ function updateGame(){
 
         spawnEnemy();
         particleController.updateParticles();
-
-        
-
     }else{
+        // gameOverDisplay.style.display = "block";
         score.update();
         bgMusic.pause();
         score.stopTimer();
+
         playerContext.beginPath();
-        playerContext.font = "bold 190px Arial";
+        playerContext.font = "bold 120px Arial";
         playerContext.fillStyle = this.color;
-        playerContext.fillText("Game Over",window.innerWidth/3.5,window.innerHeight/2);
+        playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
+
+
     }
 }
-
-
-
 
 function spawnEnemy(){
     for (let i = 0; i < enemyArr.length; i++) {
@@ -194,13 +189,11 @@ function spawnEnemy(){
     }
 }
 
+// function restartGame() {
+//     isAlive = true;
+//     gameOverDisplay.style.display = "none"
+//     // mainMenu.style.display = "none";
 
-function startGame(){
-
-    mainMenu.style.display = "none";
-    playerCanvas.style.display = "block";
-    gameLoop();
-
-    createEnemy();
-
-}
+//     gameLoop();
+//     createEnemy();
+// }
