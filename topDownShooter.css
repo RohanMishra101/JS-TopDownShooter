@@ -112,7 +112,7 @@ body {
     .btns {
         font-size: 3vw; /* Responsive font size based on viewport width */
         /* padding: 7px; Adjust button padding */
-    }
+    } 
 }
 @media screen and (max-width: 1200px) {
     

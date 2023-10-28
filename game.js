@@ -7,15 +7,15 @@ playerCanvas.width = window.innerWidth;
 playerCanvas.height = window.innerHeight;
 playerCanvas.style.pointerEvents = "none";
 playerCanvas.style.backgroundColor = "#2B2730";
-
+playerCanvas.style.zIndex = "10";
 
 let playerContext = canvas.getContext("2d");
 
 
 let mainMenu = document.getElementById("menu");
 let playBtn = document.getElementById("playBtn");
-// let restartBtn = document.getElementById("restart");
-// let gameOverDisplay = document.getElementById("restartBtns");
+let restartBtn = document.getElementById("restart");
+let gameOverDisplay = document.getElementById("restartButtons");
 let exitBtn = document.getElementById("exitBtn");
 
 window.addEventListener('resize', resizeCanvas);
@@ -98,19 +98,18 @@ function createEnemy(){
 // =-=-=-=-=-=-= Event Listeners =-=-=-=-=-=-=-=
 
 playBtn.addEventListener("click", () =>{
-    isAlive = true;
+    player.isAlive = true;
     mainMenu.style.display = "none";
-    // gameOverDisplay.style.display = "none";
+    gameOverDisplay.style.display = "none";
     playerCanvas.style.display = "block";
-    isGameRunning = true;
+    // isGameRunning = true;
     gameLoop();
     createEnemy();
 });
-// restartBtn.addEventListener("click", () => {
-//     console.log("Restart");
-//     gameOverDisplay.style.display = "none"; // Hide the game over display when restarting
-//     restartGame(); // Call the restartGame function here
-// });
+restartBtn.addEventListener("click", () => {
+    console.log("Restart"); 
+    restartGame();
+});
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
         isPaused = true;
@@ -143,20 +142,40 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
     keys[e.code] = false;
 });
-
+let gameLoopId = null;
+let frameCount = 0;
+let startTime = performance.now();
 function gameLoop(){
     // console.log("GameLoop");
-    measureRefreshRate();
 
     updateGame();
+    if (player.isAlive) {
+        frameCount++;
+        const currentTime = performance.now();
+        const elapsedTime = currentTime - startTime;
 
-    requestAnimationFrame(gameLoop);
+        if (elapsedTime >= 1000) {
+            const refreshRate = frameCount;
+            // Adjust game speeds based on refresh rate
+            if (refreshRate < 100) {
+                player.speed = 10;
+                player.enemySpeed = 6;
+            } else {
+                player.speed = 4;
+                player.enemySpeed = 2;
+            }
+            frameCount = 0;
+            startTime = currentTime;
+        }
+        gameLoopId = requestAnimationFrame(gameLoop);
+    } else {
+        cancelAnimationFrame(gameLoopId);
+    }
 }
 
 function updateGame(){
-    // console.log("Updating");
-    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height); // Clear the player canvas
 
+    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 
     if(player.isAlive){
         bgMusic.play();
@@ -171,8 +190,11 @@ function updateGame(){
 
         spawnEnemy();
         particleController.updateParticles();
-    }else{
-        // gameOverDisplay.style.display = "block";
+    }
+    if(!player.isAlive){
+        gameOverDisplay.style.display = "block";
+        gameOverDisplay.style.zIndex = "11";
+
         score.update();
         bgMusic.pause();
         score.stopTimer();
@@ -181,8 +203,6 @@ function updateGame(){
         playerContext.font = "bold 120px Arial";
         playerContext.fillStyle = this.color;
         playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
-
-
     }
 }
 
@@ -192,44 +212,27 @@ function spawnEnemy(){
     }
 }
 
-// function restartGame() {
-//     isAlive = true;
-//     gameOverDisplay.style.display = "none"
-//     // mainMenu.style.display = "none";
+function restartGame() {
+    player.isAlive = true;
 
-//     gameLoop();
-//     createEnemy();
-// }
+    score.incScore = 0;
+    score.hourTime = 0;
+    score.minTime = 0;
+    score.secTime = 0;
 
+    enemyArr = [];
+    enemyInterval = 1000;
 
-function measureRefreshRate() {
-    var frameCount = 0;
-    var startTime = performance.now();
-
-    function draw() {
-        frameCount++;
-            // console.log(performance.now() - startTime);
-        if (performance.now() - startTime >= 1000) {
-            var refreshRate = frameCount;
-            // console.log("Estimated Screen Refresh Rate: " + refreshRate + " FPS");
-
-            if(refreshRate < 100){
-                player.speed = 10;
-                player.enemySpeed = 6;
-            }else{
-                player.speed = 4;
-                player.enemySpeed = 2;
-            }
-            console.log("Player : ",player.speed);
-            console.log("Enemy : ",player.enemySpeed);
-
-           
-        } else {
-            requestAnimationFrame(draw);
-        }
+    // Clear all previous intervals
+    for (let i = 1; i < 99999; i++) {
+        window.clearInterval(i);
     }
+    player.position.posX = centerPointX;
+    player.position.posY = centerPointY;
 
-    draw();
+    gameOverDisplay.style.display = "none"
+    gameOverDisplay.style.zIndex = "-1";
+
+    gameLoop();
+    createEnemy();
 }
-
-

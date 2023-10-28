@@ -58,24 +58,24 @@ class Enemy{
             case 0: // top
                 randomLocation = {
                     x: Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
-                    y: yMin - this.size.radius - 10 // Place enemy just above the top edge
+                    y: yMin - this.size.radius - 50, // Place enemy just above the top edge
                 };
                 break;
             case 1: // right
                 randomLocation = {
-                    x: xMax + this.size.radius + 10, // Place enemy just to the right of the right edge
+                    x: xMax + this.size.radius + 50, // Place enemy just to the right of the right edge
                     y: Math.floor(Math.random() * (yMax - yMin + 1) + yMin)
                 };
                 break;
             case 2: // bottom
                 randomLocation = {
                     x: Math.floor(Math.random() * (xMax - xMin + 1) + xMin),
-                    y: yMax + this.size.radius + 10 // Place enemy just below the bottom edge
+                    y: yMax + this.size.radius + 50, // Place enemy just below the bottom edge
                 };
                 break;
             case 3: // left
                 randomLocation = {
-                    x: xMin - this.size.radius - 10, // Place enemy just to the left of the left edge
+                    x: xMin - this.size.radius - 50, // Place enemy just to the left of the left edge
                     y: Math.floor(Math.random() * (yMax - yMin + 1) + yMin)
                 };
                 break;
@@ -113,12 +113,10 @@ class Enemy{
 
 
     update(){
-        // this.createEnemy();
         // this.generateRandomLocation();
         this.draw();
         this.move();
         
-        // this.enemyToenemyCollision();
         this.enemyToPlayerCollision();
     }
 

@@ -1,12 +1,12 @@
 //Player
 class Player{
-    constructor(bulletControler){
+    constructor(bulletController){
         this.position = {
             posX : centerPointX, 
             posY : centerPointY,
         }
         
-        this.bulletControler = bulletControler;
+        this.bulletController = bulletController;
         this.health = 3;
         this.speed = 6;
         this.angle;
@@ -14,7 +14,7 @@ class Player{
         this.canvasHeight = canvas.height;
         this.color = "#38a3a5";
         this.radius = 35;
-        this.isAlive = true;
+        this.isAlive;
         this.enemySpeed;
     }
     draw(){
@@ -23,8 +23,6 @@ class Player{
         playerContext.shadowBlur = 1000; // Blur radius of the glow
         playerContext.shadowOffsetX = 0; // Horizontal offset of the glow
         playerContext.shadowOffsetY = 0; // Vertical offset of the glow
-
-        // playerContext.clearRect(0,0,canvas.width,canvas.height);
 
         playerContext.save();
         playerContext.translate(this.position.posX,this.position.posY);
@@ -111,7 +109,8 @@ class Player{
             const bulletX = playerBottomX - offsetX;
             const bulletY = playerBottomY + offsetY;
 
-            this.bulletControler.shoot(bulletX,bulletY,speed,damage,delay,this.angle);
+            this.bulletController.shoot(bulletX,bulletY,speed,damage,delay,this.angle);
         }
     }
 }
+

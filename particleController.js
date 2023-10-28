@@ -1,7 +1,7 @@
 class ParticleController {
     constructor() {
         this.particles = [];
-        this.totalParticles = 30;
+        this.totalParticles = 15;
     }
 
     createParticle(enemy) {
