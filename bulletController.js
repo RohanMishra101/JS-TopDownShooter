@@ -6,7 +6,7 @@ class bulletController{
     
     
     constructor(score){
-        this.r = 4;
+        this.r = 6;
         this.checkCollision;
         this.score = score;
         this.shipBoom = new Audio();
