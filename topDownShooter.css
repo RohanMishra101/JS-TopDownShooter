@@ -20,6 +20,7 @@ body {
     align-items: center;
     height: 80vh;
     width: 100%;
+    z-index: 12;
     /* display: none; */
     /* z-index: 1000; */
 }
@@ -83,7 +84,7 @@ body {
     align-items: center;
     height: 100vh;
     width: 100%;
-    /* display: none; */
+    display: none;
     /* outline: red 3px solid; */
 }
 
@@ -113,6 +114,7 @@ body {
         font-size: 3vw; /* Responsive font size based on viewport width */
         /* padding: 7px; Adjust button padding */
     } 
+
 }
 @media screen and (max-width: 1200px) {
     

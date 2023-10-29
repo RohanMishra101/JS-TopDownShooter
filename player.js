@@ -8,7 +8,7 @@ class Player{
         
         this.bulletController = bulletController;
         this.health = 3;
-        this.speed = 6;
+        this.speed;
         this.angle;
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;

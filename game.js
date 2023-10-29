@@ -15,7 +15,7 @@ let playerContext = canvas.getContext("2d");
 let mainMenu = document.getElementById("menu");
 let playBtn = document.getElementById("playBtn");
 let restartBtn = document.getElementById("restart");
-let gameOverDisplay = document.getElementById("restartButtons");
+let gameOverDisplay = document.getElementById("GameOver");
 let exitBtn = document.getElementById("exitBtn");
 
 window.addEventListener('resize', resizeCanvas);
@@ -158,11 +158,11 @@ function gameLoop(){
             const refreshRate = frameCount;
             // Adjust game speeds based on refresh rate
             if (refreshRate < 100) {
-                player.speed = 10;
-                player.enemySpeed = 6;
+                player.speed = 6;
+                player.enemySpeed = 4;
             } else {
-                player.speed = 4;
-                player.enemySpeed = 2;
+                player.speed = 3;
+                player.enemySpeed = 1.5;
             }
             frameCount = 0;
             startTime = currentTime;
