@@ -43,7 +43,7 @@ body {
     position: absolute;
     top: 70%; 
     left: 50%; 
-    transform: translate(-50%, -50%); 
+    transform: translate(-51%, -50%); 
     width: 400px;
 }
 
@@ -87,22 +87,19 @@ body {
     width: 100%;
     display: none;
 }
-.over{
-    color: white;    
+.over {
+    color: white;
     font-family: 'Manrope', sans-serif;
-    font-size:90px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 500px; */
+    font-size: 90px;
     position: absolute;
-    top: 33%;
-    left: 27%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 10px;
     border-radius: 40px;
-    background-color: rgba(255, 0, 0, 0.4); /* Semi-transparent red background */
-    backdrop-filter: blur(10px); /* Apply blur effect for frosted glass */
-    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.7); 
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent red background */
+    backdrop-filter: blur(1px); /* Apply blur effect for frosted glass */
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.3);
 }
 
 
