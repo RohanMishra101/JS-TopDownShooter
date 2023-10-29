@@ -1,4 +1,4 @@
-alert("Here is how to play this game : Movement => W,A,S,D Move mouse for Rotation");
+alert("Here is how to play this game : Movement => W,A,S,D and Move mouse for Rotation");
 //Declaration and Definition
 let playerCanvas = document.getElementById("canvas");
 playerCanvas.width = window.innerWidth;
