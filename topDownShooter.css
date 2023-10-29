@@ -41,7 +41,7 @@ body {
     align-items: center;
     margin: 20px;
     position: absolute;
-    top: 71%; 
+    top: 70%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
     width: 400px;
@@ -49,7 +49,7 @@ body {
 
 .btns {
     padding: 20px;
-    font-family: 'Grenze', serif;
+    /* font-family: 'Grenze', serif; */
     font-family: 'Manrope', sans-serif;
     font-size: 35px;
     width: 100%; 
@@ -77,7 +77,8 @@ body {
 #mainMenu{
     background-color: #ef233c;
 }
-.gameOver{
+
+.gameOver {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -85,7 +86,23 @@ body {
     height: 100vh;
     width: 100%;
     display: none;
-    /* outline: red 3px solid; */
+}
+.over{
+    color: white;    
+    font-family: 'Manrope', sans-serif;
+    font-size:90px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 500px; */
+    position: absolute;
+    top: 33%;
+    left: 27%;
+    padding: 10px;
+    border-radius: 40px;
+    background-color: rgba(255, 0, 0, 0.4); /* Semi-transparent red background */
+    backdrop-filter: blur(10px); /* Apply blur effect for frosted glass */
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.7); 
 }
 
 
@@ -126,6 +143,9 @@ body {
         font-size: 4vw; /* Responsive font size based on viewport width */
         padding: 10px; /* Adjust button padding */
     }
+    .gameOver {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -136,6 +156,9 @@ body {
     .btns {
         font-size: 5vw; /* Responsive font size based on viewport width */
         padding: 10px; /* Adjust button padding */
+    }
+    .gameOver {
+        font-size: 4vw; /* Adjust font size for smaller screens */
     }
 }
 

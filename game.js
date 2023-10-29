@@ -199,10 +199,10 @@ function updateGame(){
         bgMusic.pause();
         score.stopTimer();
 
-        playerContext.beginPath();
-        playerContext.font = "bold 120px Arial";
-        playerContext.fillStyle = this.color;
-        playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
+        // playerContext.beginPath();
+        // playerContext.font = "bold 120px Arial";
+        // playerContext.fillStyle = this.color;
+        // playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
     }
 }
 
