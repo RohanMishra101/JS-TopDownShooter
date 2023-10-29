@@ -1,6 +1,4 @@
-
-// alert("The game is still under CONSTRUCTION. You can still try it, if you found it laggy then My Brother/Sister its time to upgrade you PC cause it works on mine!!");
-
+alert("Here is how to play this game : Movement => W,A,S,D Move mouse for Rotation");
 //Declaration and Definition
 let playerCanvas = document.getElementById("canvas");
 playerCanvas.width = window.innerWidth;
