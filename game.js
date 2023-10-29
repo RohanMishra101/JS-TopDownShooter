@@ -17,7 +17,7 @@ let playBtn = document.getElementById("playBtn");
 let restartBtn = document.getElementById("restart");
 let gameOverDisplay = document.getElementById("GameOver");
 let exitBtn = document.getElementById("exitBtn");
-
+let exitBtn1 = document.getElementById("exitBtn1");
 window.addEventListener('resize', resizeCanvas);
 
 function resizeCanvas() {
@@ -109,6 +109,12 @@ playBtn.addEventListener("click", () =>{
 restartBtn.addEventListener("click", () => {
     console.log("Restart"); 
     restartGame();
+});
+exitBtn.addEventListener("click", () =>{
+    window.close();
+});
+exitBtn1.addEventListener("click", () =>{
+    window.close();
 });
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
