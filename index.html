@@ -1,42 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orbit Ops</title>
-    <link rel="icon" href="img/UI-Design.png" type="image/png">
-    <link rel="stylesheet" href="topDownShooter.css">
-</head>
-<body>
+    <link rel="icon" href="img/UI-Design.png" type="image/png" />
+    <link rel="stylesheet" href="topDownShooter.css" />
+  </head>
+  <body>
     <div class="mainMenu" id="menu">
-        <div class="container">
-            <div class="image">
-                <img src="img/UI-Design.png" alt="">
-            </div>
-            <div class="buttons">
-                <button id="playBtn" class="btns" >Play</button>
-                <button id="exitBtn" class="btns">Exit</button>
-            </div>
+      <div class="container">
+        <div class="image">
+          <img src="img/UI-Design.png" alt="" />
         </div>
+        <div class="buttons">
+          <button id="playBtn" class="btns">Play</button>
+          <button id="exitBtn" class="btns">Exit</button>
+        </div>
+      </div>
     </div>
-
 
     <div class="gameOver" id="GameOver">
+      <div class="over">
+        <h1>GameOver</h1>
+      </div>
 
-        <div class="over">
-            <h1>GameOver</h1>
-        </div>
-
-        <div class="buttons" id="restartButtons">
-            <button id="restart" class="btns">Restart</button>
-            <button id="exitBtn1" class="btns">Exit</button>
-        </div>
+      <div class="buttons" id="restartButtons">
+        <button id="restart" class="btns">Restart</button>
+        <button id="exitBtn1" class="btns">Exit</button>
+      </div>
     </div>
 
-
-    <canvas id="canvas" style="background-color: black;">
-
-    </canvas>
+    <canvas id="canvas" style="background-color: black"> </canvas>
 
     <script src="player.js"></script>
     <script src="enemy.js"></script>
@@ -46,5 +41,5 @@
     <script src="partical.js"></script>
     <script src="score.js"></script>
     <script src="game.js"></script>
-</body>
+  </body>
 </html>
