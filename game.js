@@ -1,6 +1,6 @@
-alert(
-  "Here is how to play this game : Movement => W,A,S,D and Move mouse for Rotation"
-);
+// alert(
+//   "Here is how to play this game : Movement => W,A,S,D and Move mouse for Rotation"
+// );
 //Declaration and Definition
 let playerCanvas = document.getElementById("canvas");
 playerCanvas.width = window.innerWidth;
@@ -71,7 +71,7 @@ function createEnemy() {
     return;
   }
   setInterval(() => {
-    let enemy = new Enemy(player);
+    let enemy = new Enemy(player,bullet);
     enemyArr.push(enemy);
 
     if (enemyInterval > 700) {
@@ -151,7 +151,7 @@ function gameLoop(timestamp) {
 
   if (player.isAlive) {
     player.speed = 520 * deltaTime;
-    player.enemySpeed = 400 * deltaTime;
+    player.enemySpeed = 200 * deltaTime;
 
     gameLoopId = requestAnimationFrame(gameLoop);
   } else {

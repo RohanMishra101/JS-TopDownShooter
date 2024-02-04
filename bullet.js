@@ -21,10 +21,5 @@ class Bullet{
         this.y += this.speedY;
         playerContext.arc(this.x,this.y,this.r,0,2 * Math.PI);
         playerContext.fill();
-    }
-
-    
-
-    
-    
+    } 
 }
