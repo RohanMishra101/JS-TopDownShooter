@@ -4,11 +4,14 @@ let xMax = window.innerWidth;
 let yMin = 0;
 let yMax = window.innerHeight;
 
+let minSize = 20;
+let maxSize = 100;
+
 // console.log(xMax , " " , yMax);
 class Enemy {
   constructor(player, bullet) {
     this.size = {
-      radius: 35,
+      radius: Math.floor(Math.random() * (maxSize - minSize + 1) + minSize),
     };
     this.position = {
       x: this.generateRandomLocation("x"),
@@ -16,7 +19,8 @@ class Enemy {
     };
 
     this.color = "#ef233c";
-    this.health = 80;
+
+    this.health = this.generateHealth(this.size.radius);
     this.damage = 3;
     this.player = player;
     this.shakeCamera = bullet;
@@ -51,10 +55,9 @@ class Enemy {
     // console.log("The angle between player and enemy =  X : " ,dx," Y : ", dy);
 
     this.distance = Math.sqrt(dx * dx + dy * dy);
-
-    // let speed = 2;
     this.position.x -= (dx / this.distance) * this.speed;
     this.position.y -= (dy / this.distance) * this.speed;
+    // console.log("Enemy Health = " + this.health);
   }
 
   generateRandomLocation(arg) {
@@ -136,6 +139,16 @@ class Enemy {
         console.log(this.player.health);
       }
       // console.log(this.player.health);
+    }
+  }
+
+  generateHealth(size) {
+    if (size >= 20 && size <= 35) {
+      return Math.floor(Math.random() * (60 - 40 + 1)) + 40;
+    } else if (size >= 36 && size <= 60) {
+      return Math.floor(Math.random() * (150 - 60 + 1)) + 60;
+    } else if (size > 60) {
+      return Math.floor(Math.random() * (300 - 150 + 1)) + 150;
     }
   }
 

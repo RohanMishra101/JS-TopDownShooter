@@ -22,58 +22,6 @@ class bulletController {
     }
     this.timeTillNextBullets--;
   }
-  //   enemyCollision() {
-  //     for (let i = this.bullets.length - 1; i >= 0; i--) {
-  //       const bullet = this.bullets[i];
-  //       if (bullet && bullet.x !== undefined) {
-  //         for (let j = enemyArr.length - 1; j >= 0; j--) {
-  //           const enemy = enemyArr[j];
-  //           if (enemy && enemy.position && enemy.position.x !== undefined) {
-  //             const dx = bullet.x - enemy.position.x;
-  //             const dy = bullet.y - enemy.position.y;
-  //             const distance = Math.sqrt(dx * dx + dy * dy);
-
-  //             if (distance < this.r + enemy.size.radius) {
-  //               // console.log("Enemy Dead");
-
-  //               if (enemy.health > 0) {
-  //                 enemy.health -= bullet.damage;
-  //                 this.shakeCamera(10, 30);
-  //                 setTimeout(() => {
-  //                   this.bullets.splice(i, 1);
-  //                   //   enemyArr.splice(j, 1);
-  //                 }, 0);
-  //               } else {
-  //                 this.shakeCamera(40, 70);
-
-  //                 this.score.incScore += 1;
-
-  //                 this.shipBoom.play();
-
-  //                 const particle = new Particle(enemy);
-  //                 particleController.createParticle(enemy);
-
-  //                 // Remove the bullet and the enemy
-  //                 setTimeout(() => {
-  //                   this.bullets.splice(i, 1);
-  //                   enemyArr.splice(j, 1);
-  //                 }, 0);
-  //               }
-  //             }
-  //             if (
-  //               bullet.x + this.r < 0 ||
-  //               bullet.x - this.r > window.innerWidth ||
-  //               bullet.y + this.r < 0 ||
-  //               bullet.y - this.r > window.innerHeight
-  //             ) {
-  //               // console.log(this.bullets);
-  //               this.bullets.splice(i, 1);
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
   enemyCollision() {
     for (let i = this.bullets.length - 1; i >= 0; i--) {
       const bullet = this.bullets[i];

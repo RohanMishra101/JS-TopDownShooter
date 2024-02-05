@@ -71,7 +71,7 @@ function createEnemy() {
     return;
   }
   setInterval(() => {
-    let enemy = new Enemy(player,bullet);
+    let enemy = new Enemy(player, bullet);
     enemyArr.push(enemy);
 
     if (enemyInterval > 700) {
@@ -138,6 +138,7 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   keys[e.code] = false;
 });
+
 let gameLoopId = null;
 let frameCount = 0;
 let startTime = performance.now();
@@ -151,11 +152,35 @@ function gameLoop(timestamp) {
 
   if (player.isAlive) {
     player.speed = 520 * deltaTime;
-    player.enemySpeed = 200 * deltaTime;
+    player.enemySpeed =
+      Math.floor(Math.random() * (400 - 200 + 1) + 200) * deltaTime;
+    // player.enemySpeed = generateEnemySpeed() * deltaTime;
 
     gameLoopId = requestAnimationFrame(gameLoop);
   } else {
     cancelAnimationFrame(gameLoopId);
+  }
+}
+
+let baseEnemySpeed = 0;
+function increaseSpeed() {
+  baseEnemySpeed += 10;
+}
+setInterval(increaseSpeed, 4000);
+
+function generateEnemySpeed() {
+  console.log(enemyArr.length);
+  for (let i = 0; i < enemyArr.length; i++) {
+    let speed;
+    let enemy = enemyArr[i];
+    if (enemy.size.radius >= 20 && enemy.size.radius <= 35) {
+      speed = Math.floor(Math.random() * (500 - 400 + 1) + 400);
+    } else if (enemy.size.radius >= 36 && enemy.size.radius <= 50) {
+      speed = Math.floor(Math.random() * (300 - 200 + 1) + 200);
+    } else if (enemy.size.radius > 50) {
+      speed = Math.floor(Math.random() * (250 - 100 + 1) + 100);
+    }
+    return speed;
   }
 }
 
