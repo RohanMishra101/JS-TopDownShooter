@@ -10,6 +10,7 @@ class bulletController {
     this.shipBoom = new Audio();
     this.shipBoom.src = "./Music/destroyShip.wav";
     this.shipBoom.volume = 0.1;
+    this.powerUpArray = [];
   }
   draw() {
     this.bullets.forEach((bullet) => bullet.draw());
@@ -23,6 +24,8 @@ class bulletController {
     this.timeTillNextBullets--;
   }
   enemyCollision() {
+    // let powerUpArray = [];
+
     for (let i = this.bullets.length - 1; i >= 0; i--) {
       const bullet = this.bullets[i];
       if (bullet && bullet.x !== undefined) {
@@ -54,6 +57,30 @@ class bulletController {
                     const particle = new Particle(enemy);
                     particleController.createParticle(enemy);
                     enemyArr.splice(j, 1);
+
+                    const randomNumber = Math.random();
+                    let powerUpType;
+
+                    if (randomNumber < 0.6) {
+                      // No power-up dropped
+                    } else if (randomNumber < 0.65) {
+                      powerUpType = 1;
+                    } else if (randomNumber < 0.7) {
+                      powerUpType = 2;
+                    } else if (randomNumber < 0.85) {
+                      powerUpType = 3;
+                    } else {
+                      powerUpType = 4;
+                    }
+
+                    if (powerUpType) {
+                      const powerUp = new PowerUp(
+                        enemy.position.x,
+                        enemy.position.y,
+                        powerUpType
+                      );
+                      powerUpArray.push(powerUp);
+                    }
                   }
                 }, 0);
               }

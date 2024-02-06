@@ -168,21 +168,22 @@ function increaseSpeed() {
 }
 setInterval(increaseSpeed, 4000);
 
-function generateEnemySpeed() {
-  console.log(enemyArr.length);
-  for (let i = 0; i < enemyArr.length; i++) {
-    let speed;
-    let enemy = enemyArr[i];
-    if (enemy.size.radius >= 20 && enemy.size.radius <= 35) {
-      speed = Math.floor(Math.random() * (500 - 400 + 1) + 400);
-    } else if (enemy.size.radius >= 36 && enemy.size.radius <= 50) {
-      speed = Math.floor(Math.random() * (300 - 200 + 1) + 200);
-    } else if (enemy.size.radius > 50) {
-      speed = Math.floor(Math.random() * (250 - 100 + 1) + 100);
-    }
-    return speed;
-  }
-}
+// function generateEnemySpeed() {
+//   console.log(enemyArr.length);
+//   for (let i = 0; i < enemyArr.length; i++) {
+//     let speed;
+//     let enemy = enemyArr[i];
+//     if (enemy.size.radius >= 20 && enemy.size.radius <= 35) {
+//       speed = Math.floor(Math.random() * (500 - 400 + 1) + 400);
+//     } else if (enemy.size.radius >= 36 && enemy.size.radius <= 50) {
+//       speed = Math.floor(Math.random() * (300 - 200 + 1) + 200);
+//     } else if (enemy.size.radius > 50) {
+//       speed = Math.floor(Math.random() * (250 - 100 + 1) + 100);
+//     }
+//     return speed;
+//   }
+// }
+let powerUpArray = [];
 
 function updateGame() {
   playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
@@ -200,6 +201,25 @@ function updateGame() {
 
     spawnEnemy();
     particleController.updateParticles();
+
+    // Check collision with power-ups
+    for (let i = powerUpArray.length - 1; i >= 0; i--) {
+      const powerUp = powerUpArray[i];
+      powerUp.update();
+      powerUp.draw(playerContext); // Pass the game canvas context to the draw method
+
+      // Check collision with player
+      if (powerUp.checkCollisionWithPlayer(player)) {
+        console.log("Player picked up power up: ");
+        handlePowerUpCollision(powerUp); // Handle the collision
+        powerUpArray.splice(i, 1); // Remove the power-up from the array
+      }
+
+      if (!powerUp.isActive) {
+        // Remove expired power-ups from the array
+        powerUpArray.splice(i, 1);
+      }
+    }
   }
   if (!player.isAlive) {
     gameOverDisplay.style.display = "block";
@@ -213,6 +233,31 @@ function updateGame() {
     // playerContext.font = "bold 120px Arial";
     // playerContext.fillStyle = this.color;
     // playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
+  }
+}
+
+function handlePowerUpCollision(powerUp) {
+  switch (powerUp.type) {
+    case 1:
+      // Handle power-up type 1
+      console.log("Player picked up : " + powerUp.type + "Damage Boost");
+      break;
+    case 2:
+      // Handle power-up type 2
+      console.log("Player picked up : " + powerUp.type + "Hold to fire");
+      break;
+    case 3:
+      // Handle power-up type 3
+      console.log("Player picked up : " + powerUp.type + "Increase Health");
+      break;
+    case 4:
+      // Handle power-up type 4
+      console.log("Player picked up : " + powerUp.type + "Shield");
+      break;
+    default:
+      // Handle default case
+      console.log("Player picked up : " + powerUp.type + "Inc Health");
+      break;
   }
 }
 

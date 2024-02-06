@@ -20,7 +20,7 @@ class Player {
   draw() {
     // Set shadow properties for the glow effect
     playerContext.shadowColor = "White"; // Color of the glow
-    playerContext.shadowBlur = 1000; // Blur radius of the glow
+    playerContext.shadowBlur = 20; // Blur radius of the glow
     playerContext.shadowOffsetX = 0; // Horizontal offset of the glow
     playerContext.shadowOffsetY = 0; // Vertical offset of the glow
 
