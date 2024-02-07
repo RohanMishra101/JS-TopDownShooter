@@ -49,6 +49,7 @@ body {
 }
 
 .btns {
+  cursor: url(img/crosshair.png) 15 15, auto;
   padding: 20px;
   /* font-family: 'Grenze', serif; */
   font-family: "Manrope", sans-serif;

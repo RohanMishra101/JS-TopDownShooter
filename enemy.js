@@ -21,7 +21,7 @@ class Enemy {
     this.color = "#ef233c";
 
     this.health = this.generateHealth(this.size.radius);
-    this.damage = 3;
+    this.damage = 20;
     this.player = player;
     this.shakeCamera = bullet;
     this.checkCollision;
@@ -29,6 +29,8 @@ class Enemy {
     this.distance;
     this.enemyArr = [];
     this.speed = player.enemySpeed;
+    this.isShieldOn = false;
+    this.shieldHealth;
   }
 
   draw() {
@@ -107,38 +109,38 @@ class Enemy {
     );
 
     if (this.checkCollision <= this.size.radius + this.player.radius) {
-      // Calculating the unit vector pointing from the player to the enemy
-      const unitVectorX =
-        (this.position.x - this.player.position.posX) / this.checkCollision;
-      const unitVectorY =
-        (this.position.y - this.player.position.posY) / this.checkCollision;
-
-      // Calculating the new position for the enemy to stay at the desired distance
-      this.position.x =
-        this.player.position.posX + unitVectorX * desiredDistance;
-      this.position.y =
-        this.player.position.posY + unitVectorY * desiredDistance;
-
-      // Push back the player
-      const pushBackDistance = 120;
-      this.player.position.posX -= unitVectorX * pushBackDistance;
-      this.player.position.posY -= unitVectorY * pushBackDistance;
-
-      if (this.player.health > 0) {
-        this.shakeCamera.shakeCamera(70, 100);
-
-        setTimeout(() => {
-          if (this.player.health > 0) {
-            this.player.health -= this.damage;
-
-            if (this.player.health <= 0) {
-              this.player.isAlive = false;
-            }
+      if (this.player.isShieldOn) {
+        if (this.player.shieldHealth > 0) {
+          this.player.shieldHealth -= this.damage;
+          // console.log("Shield Health" + this.player.shieldHealth);
+          if (this.player.shieldHealth <= 0) {
+            this.player.isShieldOn = false;
           }
-        }, 1000);
-        console.log(this.player.health);
+        }
+      } else {
+        // Player doesn't have shield, take damage directly
+        if (this.player.health > 0) {
+          // Push back the player
+          const unitVectorX =
+            (this.position.x - this.player.position.posX) / this.checkCollision;
+          const unitVectorY =
+            (this.position.y - this.player.position.posY) / this.checkCollision;
+          const pushBackDistance = 120;
+          this.player.position.posX -= unitVectorX * pushBackDistance;
+          this.player.position.posY -= unitVectorY * pushBackDistance;
+
+          // Apply damage to player
+          this.shakeCamera.shakeCamera(70, 100);
+          setTimeout(() => {
+            if (this.player.health > 0) {
+              this.player.health -= this.damage;
+              if (this.player.health <= 0) {
+                this.player.isAlive = false;
+              }
+            }
+          }, 1000);
+        }
       }
-      // console.log(this.player.health);
     }
   }
 

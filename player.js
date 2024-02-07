@@ -16,6 +16,7 @@ class Player {
     this.radius = 35;
     this.isAlive;
     this.enemySpeed;
+    this.bulletDamage = 50;
   }
   draw() {
     // Set shadow properties for the glow effect
@@ -83,23 +84,62 @@ class Player {
     }
   }
 
+  // shoot() {
+  //   if (isMouseClicked) {
+  //     // shootMusic.src = "/./Music/shoot.wav";
+
+  //     let speed = 20;
+  //     let delay = 1;
+
+  //     if (isHoldToFire) {
+  //       speed = 30;
+  //       delay = 1;
+  //       allowHoldToFire = true;
+
+  //       if (!allowHoldToFire) {
+  //         isMouseClicked = false;
+  //       }
+  //     } else {
+  //       isMouseClicked = false;
+  //     }
+
+  //     isMouseClicked = false;
+
+  //     const adjustedAngle = this.angle - initialOffsetAngle - 0.17;
+  //     const playerBottomX = this.position.posX - 7.5 * Math.cos(adjustedAngle);
+  //     const playerBottomY = this.position.posY - 7.5 * Math.sin(adjustedAngle);
+  //     const offsetX = 45 * Math.sin(adjustedAngle);
+  //     const offsetY = 45 * Math.cos(adjustedAngle);
+
+  //     const bulletX = playerBottomX - offsetX;
+  //     const bulletY = playerBottomY + offsetY;
+
+  //     this.bulletController.shoot(
+  //       bulletX,
+  //       bulletY,
+  //       speed,
+  //       this.bulletDamage,
+  //       delay,
+  //       this.angle
+  //     );
+  //   }
+  // }
   shoot() {
-    if (isMouseClicked) {
-      // shootMusic.src = "/./Music/shoot.wav";
+    if (isHoldToFire || (isMouseClicked && !isHoldToFire)) {
+      let speed = 20;
+      let delay = 1;
 
-      isMouseClicked = false;
-      // console.log("shoot");
-      const speed = 20;
-      const delay = 1;
-      const damage = 50;
-      // Calculate the adjusted angle for shooting
+      if (isHoldToFire) {
+        speed = 20;
+        delay = 0.0001;
+      } else {
+        // Reset isMouseClicked if not in hold-to-fire mode
+        isMouseClicked = false;
+      }
+
       const adjustedAngle = this.angle - initialOffsetAngle - 0.17;
-
-      // Calculate the rotated coordinates of the bottom-center of the player
       const playerBottomX = this.position.posX - 7.5 * Math.cos(adjustedAngle);
       const playerBottomY = this.position.posY - 7.5 * Math.sin(adjustedAngle);
-
-      // Calculate the offset based on player's rotation and set bullet positions
       const offsetX = 45 * Math.sin(adjustedAngle);
       const offsetY = 45 * Math.cos(adjustedAngle);
 
@@ -110,7 +150,7 @@ class Player {
         bulletX,
         bulletY,
         speed,
-        damage,
+        this.bulletDamage,
         delay,
         this.angle
       );

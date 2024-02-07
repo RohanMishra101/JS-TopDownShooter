@@ -12,7 +12,6 @@ class Bullet{
         this.speedX = Math.cos(angle) * speed;
         this.speedY = Math.sin(angle) * speed;
         this.r = r; 
-        
     }
     draw(){
         playerContext.beginPath();

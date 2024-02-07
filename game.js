@@ -153,7 +153,7 @@ function gameLoop(timestamp) {
   if (player.isAlive) {
     player.speed = 520 * deltaTime;
     player.enemySpeed =
-      Math.floor(Math.random() * (400 - 200 + 1) + 200) * deltaTime;
+      Math.floor(Math.random() * (300 - 150 + 1) + 150) * deltaTime;
     // player.enemySpeed = generateEnemySpeed() * deltaTime;
 
     gameLoopId = requestAnimationFrame(gameLoop);
@@ -162,11 +162,11 @@ function gameLoop(timestamp) {
   }
 }
 
-let baseEnemySpeed = 0;
-function increaseSpeed() {
-  baseEnemySpeed += 10;
-}
-setInterval(increaseSpeed, 4000);
+// let baseEnemySpeed = 0;
+// function increaseSpeed() {
+//   baseEnemySpeed += 10;
+// }
+// setInterval(increaseSpeed, 4000);
 
 // function generateEnemySpeed() {
 //   console.log(enemyArr.length);
@@ -225,6 +225,9 @@ function updateGame() {
     gameOverDisplay.style.display = "block";
     gameOverDisplay.style.zIndex = "11";
 
+    isBoosted = false;
+    isHoldToFire = false;
+    allowHoldToFire = false;
     score.update();
     bgMusic.pause();
     score.stopTimer();
@@ -236,27 +239,61 @@ function updateGame() {
   }
 }
 
+let isBoosted = false;
+let isHoldToFire = false;
+let allowHoldToFire = false;
+const boostDuration = 20000; // 20 seconds
 function handlePowerUpCollision(powerUp) {
   switch (powerUp.type) {
     case 1:
-      // Handle power-up type 1
-      console.log("Player picked up : " + powerUp.type + "Damage Boost");
+      if (!isBoosted) {
+        isBoosted = true;
+        const addedDamage = 70;
+        //20sec
+        player.bulletDamage += addedDamage;
+
+        console.log("Player picked up : " + powerUp.type + " Damage Boost");
+        console.log("Bullet damage = " + player.bulletDamage);
+
+        // Reset bullet damage after boost duration
+        setTimeout(() => {
+          player.bulletDamage -= addedDamage;
+          isBoosted = false;
+          console.log("Damage Boost expired");
+          console.log("Bullet damage = " + player.bulletDamage);
+        }, boostDuration);
+      }
       break;
+
     case 2:
-      // Handle power-up type 2
-      console.log("Player picked up : " + powerUp.type + "Hold to fire");
+      isHoldToFire = true;
+      setTimeout(() => {
+        isHoldToFire = false;
+        allowHoldToFire = false;
+      }, boostDuration);
       break;
+
     case 3:
-      // Handle power-up type 3
-      console.log("Player picked up : " + powerUp.type + "Increase Health");
+      const addedHealth = 25;
+      if (player.health < 250) {
+        player.health += addedHealth;
+        // console.log("Player picked up : " + powerUp.type + "Increase Health");
+        // console.log("PLayer Health = " + player.health);
+      }
+      if (player.health > 250) {
+        player.health = 250;
+      }
       break;
     case 4:
-      // Handle power-up type 4
-      console.log("Player picked up : " + powerUp.type + "Shield");
+      if (!player.isShieldOn) {
+        player.isShieldOn = true;
+        player.shieldHealth = 100;
+      }
+      // console.log("Player picked up : " + powerUp.type + "Shield");
       break;
     default:
       // Handle default case
-      console.log("Player picked up : " + powerUp.type + "Inc Health");
+      // console.log("Player picked up : " + powerUp.type + "Inc Health");
       break;
   }
 }
@@ -291,3 +328,14 @@ function restartGame() {
   gameLoop();
   createEnemy();
 }
+
+document.body.addEventListener("mousedown", (e) => {
+  if (e.button == 0 && isHoldToFire) {
+    allowHoldToFire = true;
+    shootSound.play(); // Optionally, play a shooting sound when hold-to-fire starts
+  }
+});
+
+document.body.addEventListener("mouseup", () => {
+  allowHoldToFire = false; // Stop firing when mouse button is released
+});
