@@ -313,7 +313,7 @@ function handlePowerUpCollision(powerUp) {
       if (!player.isShieldOn) {
         player.isShieldOn = true;
         player.shieldHealth = 100;
-        if (player.shieldHealth > 0) {
+        if (player.isShieldOn) {
           powerUPUiShield.style.display = "block";
         } else {
           powerUPUiShield.style.display = "none";

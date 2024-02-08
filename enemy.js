@@ -110,7 +110,9 @@ class Enemy {
     if (this.checkCollision <= this.size.radius + this.player.radius) {
       if (this.player.isShieldOn) {
         if (this.player.shieldHealth > 0) {
-          this.player.shieldHealth -= this.damage;
+          let shieldDamage = this.damage - 10;
+          this.player.shieldHealth -= shieldDamage;
+          console.log("Shield Health  = " + this.player.shieldHealth);
           // console.log("Shield Health" + this.player.shieldHealth);
           if (this.player.shieldHealth <= 0) {
             this.player.isShieldOn = false;
