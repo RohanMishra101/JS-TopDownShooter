@@ -152,11 +152,29 @@ body {
   background-color: #38a3a5;
   padding: 20px;
   border-radius: 10px;
+  height: 460px;
+  overflow: auto;
+}
+.popup-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.popup-content::-webkit-scrollbar-track {
+  background: #38a3a5;
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 4px;
+}
+
+.popup-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .popup-content h2 {
   color: white;
   text-align: center;
-  font-size: 32px;
+  font-size: 42px;
 }
 
 /* Close button */

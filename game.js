@@ -155,6 +155,7 @@ menu1.addEventListener("click", () => {
   mainMenu.style.display = "block";
   playerCanvas.style.display = "none";
   uiGame.style.display = "block";
+  userName.value = "";
   player.health = 100;
   score.incScore = 0;
   score.hourTime = 0;
