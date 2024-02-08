@@ -10,66 +10,70 @@ body {
   background-color: #2b2730;
   overflow: hidden;
   cursor: url(img/crosshair.png) 15 15, auto;
+  font-family: "Manrope", sans-serif;
 }
 #canvas {
   display: none;
 }
 
 .mainMenu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+  max-width: 100%;
+  height: auto;
   width: 100%;
   z-index: 12;
-  /* display: none; */
-  /* z-index: 1000; */
+  /* outline: 2px dotted red; */
 }
-
-.image {
-  max-width: 100%;
-  width: 800px;
-}
-
-.image img {
-  width: 100%;
-}
-
-.buttons {
+.container {
+  /* outline: 2px solid blue; */
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-51%, -50%);
-  width: 400px;
 }
-
+.image img {
+  width: 800px;
+}
+.playerName input {
+  border-radius: 25px;
+  background-color: transparent;
+  font-size: 32px;
+  padding: 10px;
+  border: 8px solid #ccc;
+  color: white;
+  outline: none;
+  margin: 30px;
+}
+.buttons {
+  text-align: center;
+}
 .btns {
   cursor: url(img/crosshair.png) 15 15, auto;
-  padding: 20px;
-  /* font-family: 'Grenze', serif; */
+  padding: 15px 30px;
   font-family: "Manrope", sans-serif;
-  font-size: 35px;
-  width: 100%;
-  color: aliceblue;
-  border: 8px solid white;
-  border-radius: 20px;
-  margin: 10px 0;
-  text-align: center;
-  max-width: 400px;
-  box-sizing: border-box;
+  font-size: 32px;
+  border: 6px solid white;
+  width: 270px;
+  border-radius: 16px;
+  background-color: #38a3a5;
+  color: #ffffff;
+  margin: 10px;
 }
-
 #playBtn {
   background-color: #38a3a5;
+}
+#playBtn:hover {
+  padding: 16px 31px;
+  background-color: #339293;
 }
 
 #exitBtn {
   background-color: #ef233c;
+}
+#exitBtn:hover {
+  padding: 16px 32px;
+
+  background-color: #af0e21;
 }
 #exitBtn1 {
   background-color: #ef233c;
@@ -79,12 +83,7 @@ body {
   background-color: #38a3a5;
 }
 
-#mainMenu {
-  background-color: #ef233c;
-}
-
 .gameOver {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,65 +95,170 @@ body {
   color: white;
   font-family: "Manrope", sans-serif;
   font-size: 90px;
-  position: absolute;
+  padding: 10px;
+  border-radius: 40px;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* PopUp */
+/* Popup container */
+.openPopup {
+  background: transparent;
+  border: 4px solid white;
+  outline: none;
+  border-radius: 50%;
+  padding: 10px;
+  position: fixed;
+  top: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+}
+
+.openPopup img {
+  width: 60px;
+  height: 60px;
+}
+.popup {
+  display: none; /* Hide the popup by default */
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 20px;
+  width: 600px;
+  height: 500px;
+  border-radius: 30px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #38a3a5;
+  padding: 20px;
+  border-radius: 10px;
+}
+.popup-content h2 {
+  color: white;
+  text-align: center;
+  font-size: 32px;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: -30px;
+  right: -8px;
+  cursor: pointer;
+  font-size: 56px; /* Increase the font size */
+  font-weight: 600;
+  color: white; /* Set the color to white */
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  text-align: start;
+}
+
+/* Game UI */
+.gameUi {
+  /* border: 2px solid rebeccapurple; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   padding: 10px;
-  border-radius: 40px;
-  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent red background */
-  backdrop-filter: blur(1px); /* Apply blur effect for frosted glass */
-  box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.3);
+  z-index: 10000;
+}
+
+.playerInfo {
+  display: flex;
+  flex-direction: column;
+  display: none;
+  color: white;
+}
+
+.playerBar {
+  margin-bottom: 10px;
+}
+.healthBar {
+  width: 200px; /* Adjust width of the health bar */
+  height: 20px; /* Adjust height of the health bar */
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.healthBarFill {
+  height: 100%;
+  background-color: #0f0; /* Green color for healthy */
+  border-radius: 5px;
+}
+.powerUps {
+  display: flex;
+}
+
+.powerUps img {
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
 }
 
 /* Media Queries */
 @media screen and (max-width: 1920px) {
-  .image {
-    max-width: 100%; /* Ensure images are responsive within their parent container */
-    width: 800px; /* Set initial width */
+  .image img {
+    max-width: 100%;
+    width: 600px;
   }
-  /* .image img {
-        width: 80%;
-    } */
   .buttons {
     flex-direction: row;
     justify-content: space-around;
     top: 600px;
-    width: 60%; /* Reduce button width for smaller screens */
+    width: 60%;
     margin-left: 20px;
   }
-
   .btns {
-    font-size: 3vw; /* Responsive font size based on viewport width */
-    /* padding: 7px; Adjust button padding */
+    font-size: 3vw;
   }
 }
 @media screen and (max-width: 1200px) {
   .buttons {
-    width: 90%; /* Reduce button width for smaller screens */
+    width: 90%;
   }
 
   .btns {
-    font-size: 4vw; /* Responsive font size based on viewport width */
-    padding: 10px; /* Adjust button padding */
+    font-size: 4vw;
+    padding: 10px;
   }
   .gameOver {
-    flex-direction: column; /* Stack items vertically on smaller screens */
+    flex-direction: column;
   }
 }
 
 @media screen and (max-width: 768px) {
   .buttons {
-    width: 90%; /* Reduce button width for smaller screens */
+    width: 90%;
   }
 
   .btns {
-    font-size: 5vw; /* Responsive font size based on viewport width */
-    padding: 10px; /* Adjust button padding */
+    font-size: 5vw;
+    padding: 10px;
   }
   .gameOver {
-    font-size: 4vw; /* Adjust font size for smaller screens */
+    font-size: 4vw;
   }
 }
-
-/* Additional media queries for smaller screens if needed */

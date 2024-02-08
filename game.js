@@ -11,13 +11,25 @@ playerCanvas.style.zIndex = "10";
 
 let playerContext = canvas.getContext("2d");
 
+let userName = document.getElementById("userName");
+let leaderBoard = document.getElementById("leaderBoard");
 let mainMenu = document.getElementById("menu");
 let playBtn = document.getElementById("playBtn");
 let restartBtn = document.getElementById("restart");
 let gameOverDisplay = document.getElementById("GameOver");
 let exitBtn = document.getElementById("exitBtn");
 let exitBtn1 = document.getElementById("exitBtn1");
+let table = document.querySelector("#popup table");
+
+let uiGame = document.getElementById("gameUI");
+let playerInfo = document.getElementById("playerData");
+let playerNameElement = document.getElementById("playerName");
+let healthElement = document.getElementById("health");
+let healthBarFillElement = document.getElementById("healthBarFill");
 window.addEventListener("resize", resizeCanvas);
+
+const storedGameData = localStorage.getItem("gameData");
+const gameDataFromLocalStorage = JSON.parse(storedGameData);
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -86,13 +98,19 @@ function createEnemy() {
   }, enemyInterval);
 }
 
+let playerName;
 // =-=-=-=-=-=-= Event Listeners =-=-=-=-=-=-=-=
 
 playBtn.addEventListener("click", () => {
+  playerName = userName.value;
+  console.log(playerName);
   player.isAlive = true;
   mainMenu.style.display = "none";
   gameOverDisplay.style.display = "none";
+  leaderBoard.style.display = "none";
   playerCanvas.style.display = "block";
+  uiGame.style.display = "block";
+  playerInfo.style.display = "block";
   // isGameRunning = true;
   gameLoop();
   createEnemy();
@@ -161,31 +179,13 @@ function gameLoop(timestamp) {
     cancelAnimationFrame(gameLoopId);
   }
 }
-
-// let baseEnemySpeed = 0;
-// function increaseSpeed() {
-//   baseEnemySpeed += 10;
-// }
-// setInterval(increaseSpeed, 4000);
-
-// function generateEnemySpeed() {
-//   console.log(enemyArr.length);
-//   for (let i = 0; i < enemyArr.length; i++) {
-//     let speed;
-//     let enemy = enemyArr[i];
-//     if (enemy.size.radius >= 20 && enemy.size.radius <= 35) {
-//       speed = Math.floor(Math.random() * (500 - 400 + 1) + 400);
-//     } else if (enemy.size.radius >= 36 && enemy.size.radius <= 50) {
-//       speed = Math.floor(Math.random() * (300 - 200 + 1) + 200);
-//     } else if (enemy.size.radius > 50) {
-//       speed = Math.floor(Math.random() * (250 - 100 + 1) + 100);
-//     }
-//     return speed;
-//   }
-// }
 let powerUpArray = [];
 
 function updateGame() {
+  let playerHealth = player.health;
+  console.log(playerHealth);
+  updatePlayerInfo(playerHealth, playerName);
+
   playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 
   if (player.isAlive) {
@@ -202,17 +202,15 @@ function updateGame() {
     spawnEnemy();
     particleController.updateParticles();
 
-    // Check collision with power-ups
     for (let i = powerUpArray.length - 1; i >= 0; i--) {
       const powerUp = powerUpArray[i];
       powerUp.update();
-      powerUp.draw(playerContext); // Pass the game canvas context to the draw method
+      powerUp.draw(playerContext);
 
-      // Check collision with player
       if (powerUp.checkCollisionWithPlayer(player)) {
         console.log("Player picked up power up: ");
-        handlePowerUpCollision(powerUp); // Handle the collision
-        powerUpArray.splice(i, 1); // Remove the power-up from the array
+        handlePowerUpCollision(powerUp);
+        powerUpArray.splice(i, 1);
       }
 
       if (!powerUp.isActive) {
@@ -221,6 +219,7 @@ function updateGame() {
       }
     }
   }
+
   if (!player.isAlive) {
     gameOverDisplay.style.display = "block";
     gameOverDisplay.style.zIndex = "11";
@@ -231,11 +230,17 @@ function updateGame() {
     score.update();
     bgMusic.pause();
     score.stopTimer();
+  }
+}
 
-    // playerContext.beginPath();
-    // playerContext.font = "bold 120px Arial";
-    // playerContext.fillStyle = this.color;
-    // playerContext.fillText("Game Over",window.innerWidth/3,window.innerHeight/2);
+function updatePlayerInfo(playerHealth, playerName) {
+  playerNameElement.textContent = playerName;
+  healthBarFillElement.style.width = playerHealth + "%";
+  // Change color based on health
+  if (playerHealth < 40) {
+    healthBarFillElement.style.backgroundColor = "red";
+  } else {
+    healthBarFillElement.style.backgroundColor = "#0f0"; // Green color for healthy
   }
 }
 
@@ -306,17 +311,21 @@ function spawnEnemy() {
 
 function restartGame() {
   player.isAlive = true;
-
+  player.health = 100;
   score.incScore = 0;
   score.hourTime = 0;
   score.minTime = 0;
   score.secTime = 0;
 
+  isBoosted = false;
+  isHoldToFire = false;
+  isShieldOn = false;
+
   enemyArr = [];
   enemyInterval = 1000;
 
   // Clear all previous intervals
-  for (let i = 1; i < 99999; i++) {
+  for (let i = 1; i < 1000; i++) {
     window.clearInterval(i);
   }
   player.position.posX = centerPointX;
@@ -325,7 +334,8 @@ function restartGame() {
   gameOverDisplay.style.display = "none";
   gameOverDisplay.style.zIndex = "-1";
 
-  gameLoop();
+  gameLoopId = requestAnimationFrame(gameLoop);
+  // gameLoop(timestamp);
   createEnemy();
 }
 
@@ -339,3 +349,16 @@ document.body.addEventListener("mousedown", (e) => {
 document.body.addEventListener("mouseup", () => {
   allowHoldToFire = false; // Stop firing when mouse button is released
 });
+
+// PopUp
+// Function to open the popup
+function openPopup() {
+  var popup = document.getElementById("popup");
+  popup.style.display = "block";
+}
+
+// Function to close the popup
+function closePopup() {
+  var popup = document.getElementById("popup");
+  popup.style.display = "none";
+}

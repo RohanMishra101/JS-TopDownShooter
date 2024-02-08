@@ -13,12 +13,42 @@
         <div class="image">
           <img src="img/UI-Design.png" alt="" />
         </div>
+        <div class="playerName">
+          <form
+            action="https://script.google.com/macros/s/AKfycbzTIhNVSpx01BS7GUOqMzw_cg778oUeIqwubbiwF8fHCgcxtSWFAvVbuXI_RWu3STF9/exec"
+            method="post"
+          >
+            <input type="text" placeholder="Enter Player Name" id="userName" />
+          </form>
+        </div>
         <div class="buttons">
           <button id="playBtn" class="btns">Play</button>
           <button id="exitBtn" class="btns">Exit</button>
         </div>
       </div>
     </div>
+
+    <!-- PopUp -->
+    <button onclick="openPopup()" class="openPopup" id="leaderBoard">
+      <img src="img/leaderBoard.png" alt="" />
+    </button>
+
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2>Leaderboard</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+    <!-- PopUp -->
 
     <div class="gameOver" id="GameOver">
       <div class="over">
@@ -28,6 +58,25 @@
       <div class="buttons" id="restartButtons">
         <button id="restart" class="btns">Restart</button>
         <button id="exitBtn1" class="btns">Exit</button>
+      </div>
+    </div>
+
+    <div class="gameUi" id="gameUI">
+      <div class="playerInfo" id="playerData">
+        <div class="playerBar">Player Name: <span id="playerName"></span></div>
+        <div class="playerBar">
+          Health:
+          <div class="healthBar" id="healthBar">
+            <div class="healthBarFill" id="healthBarFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="powerUps">
+        <img src="img/boost.png" alt="Power-up 1" id="boost" />
+        <img src="img/bullet.png" alt="Power-up 2" id="bullet" />
+        <img src="img/heart.png" alt="Power-up 3" id="heart" />
+        <img src="img/shield.png" alt="Power-up 4" id="shield" />
       </div>
     </div>
 

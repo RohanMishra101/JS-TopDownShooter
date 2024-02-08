@@ -84,46 +84,6 @@ class Player {
     }
   }
 
-  // shoot() {
-  //   if (isMouseClicked) {
-  //     // shootMusic.src = "/./Music/shoot.wav";
-
-  //     let speed = 20;
-  //     let delay = 1;
-
-  //     if (isHoldToFire) {
-  //       speed = 30;
-  //       delay = 1;
-  //       allowHoldToFire = true;
-
-  //       if (!allowHoldToFire) {
-  //         isMouseClicked = false;
-  //       }
-  //     } else {
-  //       isMouseClicked = false;
-  //     }
-
-  //     isMouseClicked = false;
-
-  //     const adjustedAngle = this.angle - initialOffsetAngle - 0.17;
-  //     const playerBottomX = this.position.posX - 7.5 * Math.cos(adjustedAngle);
-  //     const playerBottomY = this.position.posY - 7.5 * Math.sin(adjustedAngle);
-  //     const offsetX = 45 * Math.sin(adjustedAngle);
-  //     const offsetY = 45 * Math.cos(adjustedAngle);
-
-  //     const bulletX = playerBottomX - offsetX;
-  //     const bulletY = playerBottomY + offsetY;
-
-  //     this.bulletController.shoot(
-  //       bulletX,
-  //       bulletY,
-  //       speed,
-  //       this.bulletDamage,
-  //       delay,
-  //       this.angle
-  //     );
-  //   }
-  // }
   shoot() {
     if (isHoldToFire || (isMouseClicked && !isHoldToFire)) {
       let speed = 20;

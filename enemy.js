@@ -102,7 +102,6 @@ class Enemy {
   }
 
   enemyToPlayerCollision() {
-    const desiredDistance = this.size.radius + this.player.radius + 10;
     this.checkCollision = Math.sqrt(
       Math.pow(this.position.x - this.player.position.posX, 2) +
         Math.pow(this.position.y - this.player.position.posY, 2)
@@ -118,7 +117,6 @@ class Enemy {
           }
         }
       } else {
-        // Player doesn't have shield, take damage directly
         if (this.player.health > 0) {
           // Push back the player
           const unitVectorX =
@@ -139,6 +137,7 @@ class Enemy {
               }
             }
           }, 1000);
+        } else {
         }
       }
     }
