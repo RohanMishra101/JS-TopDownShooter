@@ -150,8 +150,6 @@ menu1.addEventListener("click", () => {
   } else {
     alert("Please enter both player name and score.");
   }
-
-  
 });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -401,7 +399,9 @@ function openPopup() {
   var leaderboardTableBody = document.querySelector("#popup table tbody");
   leaderboardTableBody.innerHTML = "";
 
-  if (leaderboardData && leaderboardData.length > 0) {
+  if (Array.isArray(leaderboardData) && leaderboardData.length > 0) {
+    leaderboardData.sort((a, b) => b.score - a.score);
+
     leaderboardData.forEach(function (player) {
       var row = document.createElement("tr");
 
