@@ -26,6 +26,12 @@ let playerInfo = document.getElementById("playerData");
 let playerNameElement = document.getElementById("playerName");
 let healthElement = document.getElementById("health");
 let healthBarFillElement = document.getElementById("healthBarFill");
+
+let powerUPUiBoost = document.getElementById("boost");
+let powerUPUiHeart = document.getElementById("heart");
+let powerUPUiShield = document.getElementById("shield");
+let powerUPUiBullet = document.getElementById("bullet");
+
 window.addEventListener("resize", resizeCanvas);
 
 const storedGameData = localStorage.getItem("gameData");
@@ -103,7 +109,12 @@ let playerName;
 
 playBtn.addEventListener("click", () => {
   playerName = userName.value;
-  console.log(playerName);
+  // console.log(playerName);
+
+  powerUPUiBoost.style.display = "none";
+  powerUPUiBullet.style.display = "none";
+  powerUPUiHeart.style.display = "none";
+  powerUPUiShield.style.display = "none";
   player.isAlive = true;
   mainMenu.style.display = "none";
   gameOverDisplay.style.display = "none";
@@ -253,6 +264,7 @@ function handlePowerUpCollision(powerUp) {
     case 1:
       if (!isBoosted) {
         isBoosted = true;
+        powerUPUiBoost.style.display = "block";
         const addedDamage = 70;
         //20sec
         player.bulletDamage += addedDamage;
@@ -264,17 +276,20 @@ function handlePowerUpCollision(powerUp) {
         setTimeout(() => {
           player.bulletDamage -= addedDamage;
           isBoosted = false;
-          console.log("Damage Boost expired");
-          console.log("Bullet damage = " + player.bulletDamage);
+          // console.log("Damage Boost expired");
+          // console.log("Bullet damage = " + player.bulletDamage);
+          powerUPUiBoost.style.display = "none";
         }, boostDuration);
       }
       break;
 
     case 2:
       isHoldToFire = true;
+      powerUPUiBullet.style.display = "block";
       setTimeout(() => {
         isHoldToFire = false;
         allowHoldToFire = false;
+        powerUPUiBullet.style.display = "none";
       }, boostDuration);
       break;
 
@@ -282,6 +297,11 @@ function handlePowerUpCollision(powerUp) {
       const addedHealth = 25;
       if (player.health < 250) {
         player.health += addedHealth;
+        if (player.health > 100) {
+          powerUPUiHeart.style.display = "block";
+        } else {
+          powerUPUiHeart.style.display = "none";
+        }
         // console.log("Player picked up : " + powerUp.type + "Increase Health");
         // console.log("PLayer Health = " + player.health);
       }
@@ -293,6 +313,11 @@ function handlePowerUpCollision(powerUp) {
       if (!player.isShieldOn) {
         player.isShieldOn = true;
         player.shieldHealth = 100;
+        if (player.shieldHealth > 0) {
+          powerUPUiShield.style.display = "block";
+        } else {
+          powerUPUiShield.style.display = "none";
+        }
       }
       // console.log("Player picked up : " + powerUp.type + "Shield");
       break;

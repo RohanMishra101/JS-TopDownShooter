@@ -32,6 +32,10 @@ body {
   align-items: center;
 }
 .image img {
+  user-select: none;
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Safari and Chrome */
+  -ms-user-select: none; /* Internet Explorer */
   width: 800px;
 }
 .playerName input {
@@ -116,6 +120,10 @@ body {
 }
 
 .openPopup img {
+  user-select: none;
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Safari and Chrome */
+  -ms-user-select: none; /* Internet Explorer */
   width: 60px;
   height: 60px;
 }
@@ -210,9 +218,15 @@ th {
 }
 .powerUps {
   display: flex;
+  /* border: 2px solid red; */
+  height: 40px;
 }
 
 .powerUps img {
+  user-select: none;
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Safari and Chrome */
+  -ms-user-select: none; /* Internet Explorer */
   width: 40px;
   height: 40px;
   margin-left: 5px;
