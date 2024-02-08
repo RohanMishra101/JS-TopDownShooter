@@ -58,7 +58,10 @@ class bulletController {
                   enemy.health > 0 ? 10 : 40,
                   enemy.health > 0 ? 30 : 70
                 );
-
+                if (enemy.health < 50) {
+                  // Change enemy color to a darker shade
+                  enemy.color = "#b8182a"; // Darker color
+                }
                 setTimeout(() => {
                   this.bullets.splice(i, 1);
                   // Remove enemy if health is zero or less

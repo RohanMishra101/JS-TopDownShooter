@@ -96,10 +96,10 @@ function createEnemy() {
     let enemy = new Enemy(player, bullet);
     enemyArr.push(enemy);
 
-    if (enemyInterval > 700) {
+    if (enemyInterval > 400) {
       enemyInterval = enemyInterval - 4;
     } else {
-      enemyInterval = 700;
+      enemyInterval = 400;
     }
 
     if (score.minTime == 4) {
@@ -150,6 +150,30 @@ menu1.addEventListener("click", () => {
   } else {
     alert("Please enter both player name and score.");
   }
+
+  gameOverDisplay.style.display = "none";
+  mainMenu.style.display = "block";
+  playerCanvas.style.display = "none";
+  uiGame.style.display = "block";
+  player.health = 100;
+  score.incScore = 0;
+  score.hourTime = 0;
+  score.minTime = 0;
+  score.secTime = 0;
+
+  isBoosted = false;
+  isHoldToFire = false;
+  isShieldOn = false;
+
+  enemyArr = [];
+  enemyInterval = 1000;
+
+  // Clear all previous intervals
+  for (let i = 1; i < 1000; i++) {
+    window.clearInterval(i);
+  }
+  player.position.posX = centerPointX;
+  player.position.posY = centerPointY;
 });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -247,9 +271,11 @@ function updateGame() {
   }
 
   if (!player.isAlive) {
+    playerInfo.style.display = "none";
     gameOverDisplay.style.display = "block";
     gameOverDisplay.style.zIndex = "11";
-
+    leaderBoard.style.display = "block";
+    leaderBoard.style.zIndex = "11";
     isBoosted = false;
     isHoldToFire = false;
     allowHoldToFire = false;
@@ -360,6 +386,12 @@ function restartGame() {
   isBoosted = false;
   isHoldToFire = false;
   isShieldOn = false;
+
+  playerInfo.style.display = "block";
+  powerUPUiBoost.style.display = "none";
+  powerUPUiBullet.style.display = "none";
+  powerUPUiHeart.style.display = "none";
+  powerUPUiShield.style.display = "none";
 
   enemyArr = [];
   enemyInterval = 1000;
