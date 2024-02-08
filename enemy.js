@@ -113,21 +113,35 @@ class Enemy {
           let shieldDamage = this.damage - 10;
           this.player.shieldHealth -= shieldDamage;
           console.log("Shield Health  = " + this.player.shieldHealth);
-          // console.log("Shield Health" + this.player.shieldHealth);
           if (this.player.shieldHealth <= 0) {
             this.player.isShieldOn = false;
           }
         }
       } else {
         if (this.player.health > 0) {
-          // Push back the player
+          // Calculate push-back direction
           const unitVectorX =
             (this.position.x - this.player.position.posX) / this.checkCollision;
           const unitVectorY =
             (this.position.y - this.player.position.posY) / this.checkCollision;
+
+          // Push back the player while keeping them within bounds
           const pushBackDistance = 120;
-          this.player.position.posX -= unitVectorX * pushBackDistance;
-          this.player.position.posY -= unitVectorY * pushBackDistance;
+          const newX =
+            this.player.position.posX - unitVectorX * pushBackDistance;
+          const newY =
+            this.player.position.posY - unitVectorY * pushBackDistance;
+
+          // Check if new position is within bounds
+          if (
+            newX >= 0 &&
+            newX <= canvas.width &&
+            newY >= 0 &&
+            newY <= canvas.height
+          ) {
+            this.player.position.posX = newX;
+            this.player.position.posY = newY;
+          }
 
           // Apply damage to player
           this.shakeCamera.shakeCamera(70, 100);
@@ -139,7 +153,6 @@ class Enemy {
               }
             }
           }, 1000);
-        } else {
         }
       }
     }
