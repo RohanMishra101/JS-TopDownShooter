@@ -13,7 +13,7 @@ class Player {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.color = "#38a3a5";
-    this.radius = 35;
+    this.radius = 30;
     this.isAlive;
     this.enemySpeed;
     this.bulletDamage = 50;
@@ -30,7 +30,7 @@ class Player {
     playerContext.rotate(this.angle + initialOffsetAngle);
     playerContext.beginPath();
     playerContext.fillStyle = "White";
-    playerContext.rect(-7.5, -45, 15, 80);
+    playerContext.rect(-7.5, -45, 15, 70);
     playerContext.fill();
 
     playerContext.beginPath();

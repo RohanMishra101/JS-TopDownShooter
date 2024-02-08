@@ -5,7 +5,7 @@ let yMin = 0;
 let yMax = window.innerHeight;
 
 let minSize = 20;
-let maxSize = 100;
+let maxSize = 80;
 
 // console.log(xMax , " " , yMax);
 class Enemy {

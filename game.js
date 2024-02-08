@@ -18,7 +18,7 @@ let playBtn = document.getElementById("playBtn");
 let restartBtn = document.getElementById("restart");
 let gameOverDisplay = document.getElementById("GameOver");
 let exitBtn = document.getElementById("exitBtn");
-let exitBtn1 = document.getElementById("exitBtn1");
+let menu1 = document.getElementById("menu1");
 let table = document.querySelector("#popup table");
 
 let uiGame = document.getElementById("gameUI");
@@ -32,10 +32,12 @@ let powerUPUiHeart = document.getElementById("heart");
 let powerUPUiShield = document.getElementById("shield");
 let powerUPUiBullet = document.getElementById("bullet");
 
+let popup = document.getElementById("popup");
+
 window.addEventListener("resize", resizeCanvas);
 
-const storedGameData = localStorage.getItem("gameData");
-const gameDataFromLocalStorage = JSON.parse(storedGameData);
+// const storedGameData = localStorage.getItem("gameData");
+// const gameDataFromLocalStorage = JSON.parse(storedGameData);
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -43,6 +45,8 @@ function resizeCanvas() {
   playerCanvas.width = window.innerWidth;
   playerCanvas.height = window.innerHeight;
 }
+console.log("Window width: " + window.innerWidth);
+console.log("Window height: " + window.innerHeight);
 
 //Screen Center Point
 let centerPointX = canvas.width / 2;
@@ -133,8 +137,21 @@ restartBtn.addEventListener("click", () => {
 exitBtn.addEventListener("click", () => {
   window.close();
 });
-exitBtn1.addEventListener("click", () => {
-  window.close();
+menu1.addEventListener("click", () => {
+  let player_name = playerName;
+  let player_score = score.incScore;
+  console.log(player_name + " " + player_score);
+  if (player_name !== undefined && player_score !== undefined) {
+    var leaderboardData = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+    leaderboardData.push({ name: player_name, score: player_score });
+
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+  } else {
+    alert("Please enter both player name and score.");
+  }
+
+  
 });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -378,12 +395,38 @@ document.body.addEventListener("mouseup", () => {
 // PopUp
 // Function to open the popup
 function openPopup() {
-  var popup = document.getElementById("popup");
   popup.style.display = "block";
+
+  var leaderboardData = JSON.parse(localStorage.getItem("leaderboard"));
+  var leaderboardTableBody = document.querySelector("#popup table tbody");
+  leaderboardTableBody.innerHTML = "";
+
+  if (leaderboardData && leaderboardData.length > 0) {
+    leaderboardData.forEach(function (player) {
+      var row = document.createElement("tr");
+
+      var playerNameCell = document.createElement("td");
+      playerNameCell.textContent = player.name;
+      var playerScoreCell = document.createElement("td");
+      playerScoreCell.textContent = player.score;
+
+      row.appendChild(playerNameCell);
+      row.appendChild(playerScoreCell);
+
+      leaderboardTableBody.appendChild(row);
+    });
+  } else {
+    var noDataMessageRow = document.createElement("tr");
+    var noDataMessageCell = document.createElement("td");
+    noDataMessageCell.textContent = "No data available";
+    noDataMessageCell.colSpan = 2;
+    noDataMessageRow.appendChild(noDataMessageCell);
+    leaderboardTableBody.appendChild(noDataMessageRow);
+  }
 }
 
 // Function to close the popup
 function closePopup() {
-  var popup = document.getElementById("popup");
+  // var popup = document.getElementById("popup");
   popup.style.display = "none";
 }
