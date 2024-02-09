@@ -97,12 +97,12 @@ function createEnemy() {
     enemyArr.push(enemy);
 
     if (enemyInterval > 400) {
-      enemyInterval = enemyInterval - 4;
+      enemyInterval = enemyInterval - 50;
     } else {
       enemyInterval = 400;
     }
 
-    if (score.minTime == 4) {
+    if (score.secTime == 30 || score.secTime == 59) {
       enemyInterval -= 100;
     }
   }, enemyInterval);
@@ -316,7 +316,7 @@ function handlePowerUpCollision(powerUp) {
 
         // Reset bullet damage after boost duration
         setTimeout(() => {
-          player.bulletDamage -= addedDamage;
+          player.bulletDamage = 50;
           isBoosted = false;
           // console.log("Damage Boost expired");
           // console.log("Bullet damage = " + player.bulletDamage);
@@ -415,12 +415,13 @@ function restartGame() {
 document.body.addEventListener("mousedown", (e) => {
   if (e.button == 0 && isHoldToFire) {
     allowHoldToFire = true;
-    shootSound.play(); // Optionally, play a shooting sound when hold-to-fire starts
+    shootSound.play();
   }
 });
 
 document.body.addEventListener("mouseup", () => {
-  allowHoldToFire = false; // Stop firing when mouse button is released
+  // isHoldToFire = false;
+  allowHoldToFire = false;
 });
 
 // PopUp

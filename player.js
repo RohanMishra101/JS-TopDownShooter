@@ -85,13 +85,13 @@ class Player {
   }
 
   shoot() {
-    if (isHoldToFire || (isMouseClicked && !isHoldToFire)) {
+    if (allowHoldToFire || (isMouseClicked && !isHoldToFire)) {
       let speed = 20;
       let delay = 1;
 
-      if (isHoldToFire) {
-        speed = 20;
-        delay = 0.0001;
+      if (allowHoldToFire) {
+        speed = 10;
+        delay = 1;
       } else {
         // Reset isMouseClicked if not in hold-to-fire mode
         isMouseClicked = false;
