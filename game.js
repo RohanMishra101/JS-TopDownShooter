@@ -170,7 +170,7 @@ menu1.addEventListener("click", () => {
   enemyInterval = 1000;
 
   // Clear all previous intervals
-  for (let i = 1; i < 1000; i++) {
+  for (let i = 1; i < 9999; i++) {
     window.clearInterval(i);
   }
   player.position.posX = centerPointX;
@@ -398,7 +398,7 @@ function restartGame() {
   enemyInterval = 1000;
 
   // Clear all previous intervals
-  for (let i = 1; i < 1000; i++) {
+  for (let i = 1; i < 9999; i++) {
     window.clearInterval(i);
   }
   player.position.posX = centerPointX;

@@ -9,7 +9,7 @@ class PowerUp {
       height: 60,
     };
     this.type = type;
-    this.timer = 5;
+    this.timer = 8;
     this.isActive = true;
     this.image = this.loadImage();
   }
